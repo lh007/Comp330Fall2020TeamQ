@@ -1,7 +1,9 @@
 package GeneticsApp;
-import org.jgrapht.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
+import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 class Person{
     String firstName;
@@ -10,9 +12,11 @@ class Person{
     String dod;
     String birthPlace;
     String deathPlace;
-    int id;
+    String suffix;
+    String parents;
+    String id;
 
-    public Person(int id)
+    public Person(String id)
     {
         this.id = id;
     }
@@ -41,6 +45,8 @@ class Person{
     {
         this.deathPlace = deathPlace;
     }
+    public void setSuffix(String suffix){this.suffix = suffix;}
+    public void setParents(String parents){this.parents = parents;}
     public String getFirstName(){
         return this.firstName;
     }
@@ -59,22 +65,25 @@ class Person{
     public String getDeathPlace(){
         return this.deathPlace;
     }
+    public String getSuffix(){return this.suffix;}
+    public String getId(){return this.id;}
+    public String getParents(){return this.parents;}
 
 }
 
 class Relationship{
     Person maleParent;
     Person femaleParent;
-    int startDate;
-    int endDate;
+    String startDate;
+    String endDate;
     String description;
-    int id;
+    String id;
 
-    public Relationship(int id) {
+    public Relationship(String id) {
         this.id = id;
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 
@@ -86,11 +95,11 @@ class Relationship{
         this.femaleParent = femaleParent;
     }
 
-    public void setStartDate(int startDate){
+    public void setStartDate(String startDate){
         this.startDate = startDate;
     }
 
-    public void setEndDate(int endDate){
+    public void setEndDate(String endDate){
         this.endDate = endDate;
     }
 
@@ -106,11 +115,11 @@ class Relationship{
         return this.femaleParent;
     }
 
-    public int getStartDate() {
+    public String getStartDate() {
         return this.startDate;
     }
 
-    public int getEndDate() {
+    public String getEndDate() {
         return this.endDate;
     }
 
@@ -148,32 +157,80 @@ class RelationshipEdge
 public class FamilyGraph {
     public static void main(String[] args)
     {
-        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
+//        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
+//
+//        Person bob = new Person(1);
+//        Person tom = new Person(2);
+//        Person tony = new Person(3);
+//
+//        bob.setFirstName("Bob");
+//        tom.setFirstName("Tom");
+//        tony.setFirstName("Tony");
+//
+//        g.addVertex(bob);
+//        g.addVertex(tom);
+//        g.addVertex(tony);
+//
+//        g.addEdge(bob, tom, new RelationshipEdge("1"));
+//
 
-        Person bob = new Person(1);
-        Person tom = new Person(2);
-        Person tony = new Person(3);
 
-        bob.setFirstName("Bob");
-        tom.setFirstName("Tom");
-        tony.setFirstName("Tony");
+        ArrayList<Hashtable> test = new ArrayList<Hashtable>();
+        Hashtable <String, String> testHash = new  Hashtable <String, String>();
+        testHash.put("GivenName", "Bob");
+        testHash.put("FamilyName", "Fuchs");
+        testHash.put("Key", "P1");
+        testHash.put("Suffix", "Jr");
+        testHash.put("DOD", "yesterday");
+        testHash.put("DOB", "today");
+        testHash.put("BirthPlace", "St Louis");
+        testHash.put("DeathPlace", "Chicago");
+        testHash.put("Parents", "None");
 
-        g.addVertex(bob);
-        g.addVertex(tom);
-        g.addVertex(tony);
-
-        g.addEdge(bob, tom, new RelationshipEdge("1"));
+        test.add(testHash);
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = createGraph(test);
 
         GraphIterator<Person, RelationshipEdge> iterator =
                 new BreadthFirstIterator<Person, RelationshipEdge>(g);
-
         while (iterator.hasNext()) {
-            System.out.println( iterator.next().getFirstName() );
+            Person man = iterator.next();
+            System.out.println( man.getFirstName() );
+            System.out.println( man.getLastName() );
+            System.out.println( man.getSuffix() );
+            System.out.println( man.getDob() );
+            System.out.println( man.getDod() );
         }
 
-        for(RelationshipEdge edge : g.edgeSet())
+//        for(RelationshipEdge edge : g.edgeSet())
+//        {
+//            System.out.println(edge.getLabel());
+//        }
+
+    }
+
+    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable> people)
+    {
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
+
+        int i;
+        for(i = 0; i < people.size(); i++)
         {
-            System.out.println(edge.getLabel());
+            Hashtable personData = people.get(i);
+            String id = (String) personData.get("Key");
+            Person person = new Person(id);
+
+            person.setFirstName((String) personData.get("GivenName"));
+            person.setLastName((String) personData.get("FamilyName"));
+            person.setFirstName((String) personData.get("GivenName"));
+            person.setSuffix((String) personData.get("Suffix"));
+            person.setDob((String) personData.get("DOB"));
+            person.setDod((String) personData.get("DOD"));
+            person.setBirthPlace((String) personData.get("BirthPlace"));
+            person.setDeathPlace((String) personData.get("DeathPlace"));
+
+            g.addVertex(person);
         }
+        return g;
     }
 }
+
