@@ -1,6 +1,7 @@
 package GeneticsApp;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
+import org.jgrapht.traverse.*;
 
 class Person{
     String firstName;
@@ -147,16 +148,26 @@ class RelationshipEdge
 public class FamilyGraph {
     public static void main(String[] args)
     {
-        Graph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
         Person bob = new Person(1);
         Person tom = new Person(2);
         Person tony = new Person(3);
+
+        bob.setFirstName("Bob");
+        tom.setFirstName("Tom");
+        tony.setFirstName("Tony");
 
         g.addVertex(bob);
         g.addVertex(tom);
         g.addVertex(tony);
 
         g.addEdge(bob, tom, new RelationshipEdge("1"));
+
+        GraphIterator<Person, RelationshipEdge> iterator =
+                new BreadthFirstIterator<Person, RelationshipEdge>(g);
+        while (iterator.hasNext()) {
+            System.out.println( iterator.next().getFirstName() );
+        }
     }
 }
