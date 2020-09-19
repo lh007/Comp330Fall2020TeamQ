@@ -120,6 +120,8 @@ class Relationship{
 
 }
 
+//This is the custom edge were using, it has NO direction and hold a label which SHOULD be the a
+//relationship
 class RelationshipEdge
         extends
         DefaultEdge
@@ -142,11 +144,10 @@ class RelationshipEdge
     }
 }
 
-
 public class FamilyGraph {
     public static void main(String[] args)
     {
-        Graph<Person, RelationshipEdge> g = new SimpleDirectedGraph<>(RelationshipEdge.class);
+        Graph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
         Person bob = new Person(1);
         Person tom = new Person(2);
