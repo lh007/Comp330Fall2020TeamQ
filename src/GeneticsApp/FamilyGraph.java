@@ -166,8 +166,14 @@ public class FamilyGraph {
 
         GraphIterator<Person, RelationshipEdge> iterator =
                 new BreadthFirstIterator<Person, RelationshipEdge>(g);
+
         while (iterator.hasNext()) {
             System.out.println( iterator.next().getFirstName() );
+        }
+
+        for(RelationshipEdge edge : g.edgeSet())
+        {
+            System.out.println(edge.getLabel());
         }
     }
 }
