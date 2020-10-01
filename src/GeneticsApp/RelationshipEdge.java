@@ -1,4 +1,3 @@
-package GeneticsApp;
 
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;

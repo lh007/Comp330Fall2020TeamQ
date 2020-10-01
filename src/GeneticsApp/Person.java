@@ -1,4 +1,3 @@
-package GeneticsApp;
 
 class Person{
     String firstName;

@@ -1,4 +1,3 @@
-package GeneticsApp;
 
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;

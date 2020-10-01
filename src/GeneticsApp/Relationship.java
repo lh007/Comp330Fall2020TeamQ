@@ -1,5 +1,4 @@
 package GeneticsApp;
-
 class Relationship{
     Person maleParent;
     Person femaleParent;
