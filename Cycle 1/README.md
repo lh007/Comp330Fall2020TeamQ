@@ -1,4 +1,4 @@
-# Cycle 1 Deliverables:
+# Cycle 1 Deliverables
 
 Requirements Document
 Use Cases Document
