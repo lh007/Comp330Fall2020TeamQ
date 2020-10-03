@@ -1,3 +1,5 @@
+package GeneticsApp;
+
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ public class FamilyGraph {
     public static void main(String[] args)
     {
         //this should start parser on file and parse these array lists
-        ParserFile parser = new ParserFile();
+        ParseFile parser = new ParseFile();
 
         ArrayList<Hashtable<String,String>> peopleLsit = parser.getParsedPeople();
         ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
