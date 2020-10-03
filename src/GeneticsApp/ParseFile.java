@@ -8,17 +8,47 @@ public class ParseFile {
     String file = "FamilyTreeInputTextFile.txt";
     ArrayList<Hashtable<String,String>> parsedPerson = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedRelationship = new ArrayList<>();
+    ArrayList<Hashtable<String,String>> parsedChild = new ArrayList<>();
+
+    public ParseFile(){
+
+        readAndParse();
+    }
 
     public void readAndParse() {
         try{
 
             List<String> data = new Files.readAllLines(Paths.get(file));
+            int swap = 0;
             for(int i=0; i<data.size(); i++){
                 Hashtable <String, String> lineHash = new  Hashtable <String, String>();
                 String[] lineSplit = data(i).split(",");
+                
                 //this line split is for the divider, need to go deeper.
                 //i'm stumped. I don't want to use another for loop since that will make time complex n^2
-                if(lineSplit[0].equals("Person")){ 
+                //rework if statements, include something with the list of commas. maybe you do need to use another loop?
+
+                //have a int with a number. If a line says person make number=1, else if partnership make number =2, else if children make numebr =3
+                //else if line of commas make number =0, if number == 1 then do the first line split for person, other ifs are for partner and children 
+                //line splits. that way we only need one loop
+
+                if(lineSplit[0].equals("Person")){
+                    swap=1;
+                }
+
+                else if(lineSplit[0].equals("Partnership")){
+                    swap=2;
+                }
+
+                else if(lineSplit[0].equals("Children")){
+                    swap=3;
+                }
+
+                else if(lineSplit[0].equals("")){
+                    swap=0;
+                }
+
+                if(swap==1){ 
                     lineHash.put("Key", lineSplit[0]);
                     lineHash.put("FamilyName", lineSplit[1]);
                     lineHash.put("GivenName", lineSplit[2]);
@@ -28,17 +58,30 @@ public class ParseFile {
                     lineHash.put("DOD", lineSplit[6]);
                     lineHash.put("DeathPlace", lineSplit[7]);
                     lineHash.put("Parents", lineSplit[8]);
+                    parsedPerson.add(lineHash);
+                    //add hashtable to arraylist
                 }
-                else if(lineSplit[0].equals("Partnership")){
-
+                else if(swap==2){
+                    //do partnership stuff
+                    //also 9
+                    lineHash.put("Key", lineSplit[0]);
+                    lineHash.put("MaleParent", lineSplit[1]);
+                    lineHash.put("FemaleParent", lineSplit[2]);
+                    lineHash.put("StartDate", lineSplit[3]);
+                    lineHash.put("EndDate", lineSplit[4]);
+                    lineHash.put("Location", lineSplit[5]);
+                    parsedRelationship.add(lineHash);
+                    //add hashtable to arraylist
                 }
-                else if(lineSplit[0].equals("Children")){
-
+                else if(swap==3){
+                    //do children stuff
+                    lineHash.put("MaleParent", lineSplit[0]);
+                    lineHash.put("FemaleParent", lineSplit[1]);
+                    parsedChild.add(lineHash);
+                    //add hashtable to arraylist
                 }
 
             }
-
-
 
         }
         catch(Exception e){
@@ -46,4 +89,53 @@ public class ParseFile {
         }
 
     }
+
+
+    public ArrayList<Hashtable<String,String>> getParsedPeople(){
+        return this.parsedPerson;
+    }
+    
+    public ArrayList<Hashtable<String,String>> getParsedRelationship(){
+        return this.parsedRelationship;
+    }
+
+    public ArrayList<Hashtable<String,String>> getParsedChild(){
+        return this.parsedChild;
+    }
+
+
+
+
+
+
+
+
+    public ArrayList<Hashtable<String,String>> parsePerson(ArrayList<Hashtable<String,String>> personList){
+        List<String> data = readAndParse();
+        for(int i=0; i<data.size(); i++){
+            Hashtable <String, String> lineHash = new  Hashtable <String, String>();
+            String[] lineSplit = data(i).split(",");
+        }
+        return personList;
+    }
+
+    public ArrayList<Hashtable<String,String>> parseRelationship(ArrayList<Hashtable<String,String>> relationshipList){
+        List<String> data = readAndParse();
+        for(int i=0; i<data.size(); i++){
+            Hashtable <String, String> lineHash = new  Hashtable <String, String>();
+            String[] lineSplit = data(i).split(",");
+        }
+        return relationshipList;
+    }
+    
+    public ArrayList<Hashtable<String,String>> parseChild(ArrayList<Hashtable<String,String>> childList){
+        List<String> data = readAndParse();
+        for(int i=0; i<data.size(); i++){
+            Hashtable <String, String> lineHash = new  Hashtable <String, String>();
+            String[] lineSplit = data(i).split(",");
+        }
+        return childList;
+    }
+
+
 } 
