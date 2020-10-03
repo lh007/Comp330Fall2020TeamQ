@@ -4,6 +4,7 @@ import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class FamilyGraph {
     public static void main(String[] args)
@@ -90,6 +91,27 @@ public class FamilyGraph {
             System.out.println(edge.getLabel().getId());
 //            System.out.println(edge.getLabel().getMaleParent().getId());
 //            System.out.println(edge.getLabel().getFemaleParent().getId());
+        }
+
+    }
+
+    public static void printGraph(DefaultUndirectedGraph familyTree)
+    {
+        GraphIterator<Person, RelationshipEdge> iterator =
+                new BreadthFirstIterator<Person, RelationshipEdge>(familyTree);
+
+
+        while (iterator.hasNext()) {
+            Person man = iterator.next();
+//            System.out.println(man.getId() );
+        }
+
+        Set<RelationshipEdge> yesTree = (Set<RelationshipEdge>) familyTree.edgeSet();
+        for(RelationshipEdge edge :  yesTree)
+        {
+            System.out.println(edge.getLabel().getId());
+            System.out.println(edge.getLabel().getMaleParent().getId());
+            System.out.println(edge.getLabel().getFemaleParent().getId());
         }
 
     }
