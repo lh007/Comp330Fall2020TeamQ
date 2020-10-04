@@ -1,14 +1,11 @@
 package GeneticsApp;
 
-import org.jgrapht.Graphs;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class FamilyGraph {
     public static void main(String[] args){

@@ -14,7 +14,6 @@ public class ParseFile {
     ArrayList<Hashtable<String,String>> parsedChild = new ArrayList<>();
 
     public ParseFile(){
-
         readAndParse();
     }
 
@@ -23,16 +22,13 @@ public class ParseFile {
 
             List<String> data = Files.readAllLines(Paths.get(file));
             int swap = 0;
-            for(int i=0; i<data.size(); i++){
+            for(int i=0; i < data.size(); i++){
                 Hashtable <String, String> lineHash = new  Hashtable <String, String>();
                 String[] lineSplit = data.get(i).split(",");
-
-
 
                 if(lineSplit[0].equals("Person")){
                     swap=1;
                 }
-
                 else if(lineSplit[0].equals("Partnership")){
                     swap=2;
                 }
@@ -45,9 +41,12 @@ public class ParseFile {
                     swap=0;
                 }
 
-                if(swap==1){ 
+                if(swap==1){
                     lineHash.put("Key", lineSplit[0]);
                     lineHash.put("FamilyName", lineSplit[1]);
+
+                    System.out.println(lineSplit[0]);
+
                     lineHash.put("GivenName", lineSplit[2]);
                     lineHash.put("Suffix", lineSplit[3]);
                     lineHash.put("DOB", lineSplit[4]);
