@@ -24,7 +24,7 @@ public class ParseFile {
             int swap = 0;
             for(int i=0; i < data.size(); i++){
                 Hashtable <String, String> lineHash = new  Hashtable <String, String>();
-                String[] lineSplit = data.get(i).split(",");
+                String[] lineSplit = data.get(i).split(",",-1);
 
                 if(lineSplit[0].equals("Person")){
                     swap=1;
