@@ -21,11 +21,13 @@ public class ParseFile {
     public void readAndParse() {
         try{
 
-            List<String> data = new Files.readAllLines(Paths.get(file));
+            List<String> data = Files.readAllLines(Paths.get(file));
             int swap = 0;
             for(int i=0; i<data.size(); i++){
                 Hashtable <String, String> lineHash = new  Hashtable <String, String>();
-                String[] lineSplit = data(i).split(",");
+                String[] lineSplit = data.get(i).split(",");
+
+
 
                 if(lineSplit[0].equals("Person")){
                     swap=1;
