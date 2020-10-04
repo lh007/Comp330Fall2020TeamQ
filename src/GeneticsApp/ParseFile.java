@@ -44,9 +44,6 @@ public class ParseFile {
                 if(swap==1){
                     lineHash.put("Key", lineSplit[0]);
                     lineHash.put("FamilyName", lineSplit[1]);
-
-                    System.out.println(lineSplit[0]);
-
                     lineHash.put("GivenName", lineSplit[2]);
                     lineHash.put("Suffix", lineSplit[3]);
                     lineHash.put("DOB", lineSplit[4]);

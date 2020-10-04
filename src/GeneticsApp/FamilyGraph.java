@@ -14,64 +14,10 @@ public class FamilyGraph {
         //this should start parser on file and parse these array lists
         ParseFile parser = new ParseFile();
 
-//        ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
-//        ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
-//        ArrayList<Hashtable<String,String>> childList = parser.getParsedChild();
-
-
-//        ArrayList<Hashtable> test2 = new ArrayList<Hashtable>();
-//        Hashtable <String, String> testHash2 = new  Hashtable <String, String>();
-//        testHash2.put("MaleParent", "P1");
-//        testHash2.put("FemaleParent", "");
-//        testHash2.put("Description", "NOTHING HAPPEN");
-//        testHash2.put("EndDate", "NOW");
-//        testHash2.put("StartDate", "LATER");
-//        testHash2.put("Key", "R1");
-//        test2.add(testHash2);
-
-//        ArrayList<Hashtable> test = new ArrayList<Hashtable>();
-//        Hashtable <String, String> testHash = new  Hashtable <String, String>();
-//        testHash.put("GivenName", "Bob");
-//        testHash.put("FamilyName", "Fuchs");
-//        testHash.put("Key", "P1");
-//        testHash.put("Suffix", "Sr.");
-//        testHash.put("DOD", "yesterday");
-//        testHash.put("DOB", "today");
-//        testHash.put("BirthPlace", "St Louis");
-//        testHash.put("DeathPlace", "Chicago");
-//        testHash.put("Parents", "None");
-//        test.add(testHash);
-
-//        Hashtable <String, String> testHash3 = new  Hashtable <String, String>();
-//        testHash3.put("GivenName", "Tony");
-//        testHash3.put("FamilyName", "Fuchs");
-//        testHash3.put("Key", "P2");
-//        testHash3.put("Suffix", "Jr");
-//        testHash3.put("DOD", "yesterday");
-//        testHash3.put("DOB", "today");
-//        testHash3.put("BirthPlace", "St Louis");
-//        testHash3.put("DeathPlace", "Chicago");
-//        testHash3.put("Parents", "R1");
-//        test.add(testHash3);
-
-
-//        DefaultUndirectedGraph<Person, RelationshipEdge> g = createGraph(test, test2);
-//
-//        printGraph(g);
-
-//        GraphIterator<Person, RelationshipEdge> iterator =
-//                new BreadthFirstIterator<Person, RelationshipEdge>(g);
-//        while (iterator.hasNext()) {
-//            Person man = iterator.next();
-//            System.out.println( man.getId() );
-//        }
-//
-//        for(RelationshipEdge edge : g.edgeSet())
-//        {
-//            System.out.println(edge.getLabel().getId());
-//            System.out.println(edge.getLabel().getMaleParent().getId());
-//            System.out.println(edge.getLabel().getFemaleParent().getId());
-//        }
+        ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
+        ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = createGraph(peopleList, relationshipList);
+        printGraph(g);
 
     }
 
@@ -85,8 +31,6 @@ public class FamilyGraph {
             Person man = iterator.next();
             String relatedOutput = "";
 
-//            List<Person> neighbors = Graphs.neighborListOf(familyTree, man);
-
             Set<RelationshipEdge> relationships = familyTree.edgesOf(man);
             for(RelationshipEdge connection : relationships){
                 String maleID = connection.getLabel().getMaleParent().getId();
@@ -94,6 +38,7 @@ public class FamilyGraph {
                 String manID = man.getId();
 
                 String connectedTo = "";
+
                 if(manID == maleID)
                 {
                     connectedTo = femaleID;
@@ -114,21 +59,9 @@ public class FamilyGraph {
             System.out.print(relatedOutput);
 
         }
-
-//        Set<RelationshipEdge> yesTree = (Set<RelationshipEdge>) familyTree.edgeSet();
-//        for(RelationshipEdge edge :  yesTree)
-//        {
-//            System.out.print("NEW EDGE \n");
-//            System.out.println(edge.getLabel().getId());
-//            System.out.println(edge.getLabel().getMaleParent().getId());
-//            System.out.println(edge.getLabel().getFemaleParent().getId());
-//            Person origin = (Person) familyTree.getEdgeSource(edge);
-//            System.out.println(origin.getId());
-//        }
-
     }
 
-    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable> people, ArrayList<Hashtable> relationships)
+    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships)
     {
         DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
@@ -153,6 +86,7 @@ public class FamilyGraph {
             g.addVertex(person);
         }
 
+        System.out.println(relationships.size());
         for(i = 0; i < relationships.size(); i++)
         {
             Hashtable relationshipData = relationships.get(i);
@@ -161,7 +95,8 @@ public class FamilyGraph {
 
             String maleID;
             String femaleID;
-            if((String) relationshipData.get("MaleParent") == "")
+
+            if(relationshipData.get("MaleParent").toString().isEmpty())
             {
                 maleID = "Unknown";
             }
@@ -170,7 +105,7 @@ public class FamilyGraph {
                 maleID = (String) relationshipData.get("MaleParent");
             }
 
-            if((String) relationshipData.get("FemaleParent") == "")
+            if(relationshipData.get("FemaleParent").toString().isEmpty())
             {
                 femaleID = "Unknown";
             }
@@ -178,7 +113,7 @@ public class FamilyGraph {
             {
                 femaleID = (String) relationshipData.get("FemaleParent");
             }
-
+//            System.out.println(String.format("If [%s] is blank, then [%s] should be unknown", relationshipData.get("FemaleParent"), femaleID));
 
             Person male = new Person();
             Person female = new Person();
@@ -186,13 +121,18 @@ public class FamilyGraph {
 
             while (iterator.hasNext()) {
                 Person person = iterator.next();
-                if(person.getId() == maleID)
+
+                if(person.getId().equals(maleID))
                 {
                     male = person;
                 }
-                else if (person.getId() == femaleID)
+                else if (person.getId().equals(femaleID))
                 {
                     female = person;
+                }
+                else
+                {
+                    //System.out.println(String.format("[%s] is not equal to [%s] or [%s]", person.getId(), maleID, femaleID));
                 }
             }
             if(male.getId() == null)
@@ -227,8 +167,6 @@ public class FamilyGraph {
             Person femaleParent = new Person();
             for(RelationshipEdge edge : g.edgeSet())
             {
-//                System.out.println(edge.getLabel().getId());
-//                System.out.println(man.getParents());
                 if(edge.getLabel().getId() == man.getParents())
                 {
                     maleParent = edge.getLabel().getMaleParent();
