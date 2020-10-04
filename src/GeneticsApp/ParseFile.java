@@ -65,8 +65,8 @@ public class ParseFile {
                 }
                 else if(swap==3 && !lineSplit[0].equals("Children")){
                     //do children stuff
-                    lineHash.put("MaleParent", lineSplit[0]);
-                    lineHash.put("FemaleParent", lineSplit[1]);
+                    lineHash.put("Partnership", lineSplit[0]);
+                    lineHash.put("Child", lineSplit[1]);
                     parsedChild.add(lineHash);
                 }
 
