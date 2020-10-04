@@ -41,7 +41,7 @@ public class ParseFile {
                     swap=0;
                 }
 
-                if(swap==1){
+                if(swap==1 && !lineSplit[0].equals("Person")){
                     lineHash.put("Key", lineSplit[0]);
                     lineHash.put("FamilyName", lineSplit[1]);
                     lineHash.put("GivenName", lineSplit[2]);
@@ -53,7 +53,7 @@ public class ParseFile {
                     lineHash.put("Parents", lineSplit[8]);
                     parsedPerson.add(lineHash);
                 }
-                else if(swap==2){
+                else if(swap==2 && !lineSplit[0].equals("Partnership")){
 
                     lineHash.put("Key", lineSplit[0]);
                     lineHash.put("MaleParent", lineSplit[1]);
@@ -63,7 +63,7 @@ public class ParseFile {
                     lineHash.put("Location", lineSplit[5]);
                     parsedRelationship.add(lineHash);
                 }
-                else if(swap==3){
+                else if(swap==3 && !lineSplit[0].equals("Children")){
                     //do children stuff
                     lineHash.put("MaleParent", lineSplit[0]);
                     lineHash.put("FemaleParent", lineSplit[1]);
