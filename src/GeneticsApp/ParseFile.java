@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class ParseFile {
-    String file = "FamilyTreeInputTextFile.txt";
+    String file = "FamilyTreeInputTextFile.txt"; //name of file to parse, prob want it to look for the csv file too
     ArrayList<Hashtable<String,String>> parsedPerson = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedRelationship = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedChild = new ArrayList<>();
@@ -16,7 +16,14 @@ public class ParseFile {
     public ParseFile(){
         readAndParse();
     }
-
+//makes list of lines from input file
+//one for loop needed. Did this to keep the time down for really big files. Might need tweaking later
+//linesplit splits the line into an array where it's split up by the "," if it is empty it will still hold an empty string at that spot of the array
+//swap is to swap between the templates of the lines, if it is a person it will swap to that hashtable keys and same with the oters
+//the last 3 ifs make sure to not parse the headers of the sections, will add the appropriate strings from linesplit to the hashtable
+//used try and catch for errors
+//linehash will then be added to the appropriate arraylist for use with the graph
+//get methods just to get those arraylists
     public void readAndParse() {
         try{
 
