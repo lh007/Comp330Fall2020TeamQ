@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class ParseFile {
-    String file = "FamilyTreeInputTextFile.txt";
+    String file = "GeneticsApp/FamilyTreeInputTextFile.txt";
     ArrayList<Hashtable<String,String>> parsedPerson = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedRelationship = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedChild = new ArrayList<>();
