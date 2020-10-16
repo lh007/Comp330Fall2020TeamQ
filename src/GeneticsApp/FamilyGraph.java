@@ -8,10 +8,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class FamilyGraph {
+
+    //Currently main gets the three parsed sections of the input file then uses them to build a graph
+    //and print it
     public static void main(String[] args){
 
 
-        //this should start parser on file and parse these array lists
+        //File parsers
         ParseFile parser = new ParseFile();
 
         ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
@@ -20,26 +23,36 @@ public class FamilyGraph {
         DefaultUndirectedGraph<Person, RelationshipEdge> g = createGraph(peopleList, relationshipList, parentList);
         printGraph(g);
 
+        //PART C AND B WILL BE A NEW FUNCTION WILL BE CALLED HERE VIA A SIMPLE CONSOLE FRONT-END
+
     }
 
+    //Prints each vertex, it's name, and all its relationships
     public static void printGraph(DefaultUndirectedGraph familyTree)
     {
+        //Create an iterator with which to traverse the graph
         GraphIterator<Person, RelationshipEdge> iterator =
                 new BreadthFirstIterator<Person, RelationshipEdge>(familyTree);
 
-
+        //Using the iterator we can iterate across all vertexes
         while (iterator.hasNext()) {
             Person man = iterator.next();
             String relatedOutput = "";
 
+            //Gets all the edges associated with the current vertex
             Set<RelationshipEdge> relationships = familyTree.edgesOf(man);
+
+            //Iterate across all associated edges
             for(RelationshipEdge connection : relationships){
+                //Get the ID of the male and female parent of this relationships
                 String maleID = connection.getLabel().getMaleParent().getId();
                 String femaleID = connection.getLabel().getFemaleParent().getId();
                 String manID = man.getId();
 
                 String connectedTo = "";
 
+                //Checks to see if the current person is the MALE or FEMALE in this relationships
+                //Sets whichever the person ISNT as the connectedTo ID
                 if(manID == maleID)
                 {
                     connectedTo = femaleID;
@@ -53,6 +66,10 @@ public class FamilyGraph {
                     System.out.print("This shouldnt happen");
                 }
 
+                //THIS IS ROUGHLY WHERE PART D IS RELEVANT!
+
+                //This sections attempts to discern from the relationship ID what TYPE of relationship
+                //this is and add it to the string output for this person.
                 String[] list = connection.getLabel().getId().split("-");
                 if (list[0].equals("Child"))
                 {
@@ -69,6 +86,7 @@ public class FamilyGraph {
                     relatedOutput = relatedOutput + String.format("\tIn relationship %s to %s\n", connection.getLabel().getId(), connectedTo);
                 }
             }
+            //Print the person ID, their name, and the related output built above
             System.out.println(String.format("ID: %s", man.getId()));
             System.out.println(String.format("\tFirst name: %s\n\tLast name: %s", man.getFirstName(), man.getLastName()));
             System.out.print(relatedOutput);
@@ -80,6 +98,8 @@ public class FamilyGraph {
     {
         DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
+        //This first section iterates through the list of People we need to create and sets a Person
+        //object with all the correct data for that person
         int i;
         for(i = 0; i < people.size(); i++)
         {
@@ -98,10 +118,12 @@ public class FamilyGraph {
             person.setDeathPlace((String) personData.get("DeathPlace"));
             person.setParents((String)personData.get("Parents"));
 
+            //Add this person as a vertex on the graph
             g.addVertex(person);
         }
 
-        System.out.println(relationships.size());
+
+        //This section iterates through the imported relationships
         for(i = 0; i < relationships.size(); i++)
         {
             Hashtable relationshipData = relationships.get(i);
@@ -111,6 +133,7 @@ public class FamilyGraph {
             String maleID;
             String femaleID;
 
+            //If a parent ID is null set it to unknown, otherwise set it to the imported value
             if(relationshipData.get("MaleParent").toString().isEmpty())
             {
                 maleID = "Unknown";
@@ -128,15 +151,16 @@ public class FamilyGraph {
             {
                 femaleID = (String) relationshipData.get("FemaleParent");
             }
-//            System.out.println(String.format("If [%s] is blank, then [%s] should be unknown", relationshipData.get("FemaleParent"), femaleID));
 
             Person male = new Person();
             Person female = new Person();
             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
 
+            //Iterate across the current Person elements implemented in our graph
             while (iterator.hasNext()) {
                 Person person = iterator.next();
 
+                //If the maleID is equal to another persons, then set them to their associated parents
                 if(person.getId().equals(maleID))
                 {
                     male = person;
@@ -145,11 +169,9 @@ public class FamilyGraph {
                 {
                     female = person;
                 }
-                else
-                {
-                    //System.out.println(String.format("[%s] is not equal to [%s] or [%s]", person.getId(), maleID, femaleID));
-                }
             }
+
+            //If the person is unknown, set their ID to unknown person and add to the vertex
             if(male.getId() == null)
             {
                 male.setId("Unknown Person");
@@ -162,6 +184,8 @@ public class FamilyGraph {
                 g.addVertex(female);
             }
 
+            //The elements of a relationship are being set here before being added as an edge to
+            //the graph
             r.setMaleParent(male);
             r.setFemaleParent(female);
             r.setDescription((String) relationshipData.get("Description"));
@@ -172,6 +196,8 @@ public class FamilyGraph {
             g.addEdge(male, female, edge);
         }
 
+        //Iterates through all the edges with the intention of setting parent relationships using
+        //parentList
         Set<RelationshipEdge> edges = g.edgeSet().stream().collect(Collectors.toSet());
         for(int index = 0; index < parentList.size(); index++)
         {
