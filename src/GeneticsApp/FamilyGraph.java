@@ -16,14 +16,94 @@ public class FamilyGraph {
 
         //File parsers
         ParseFile parser = new ParseFile();
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
 
-        ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
-        ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
-        ArrayList<Hashtable<String,String>> parentList = parser.getParsedChild();
-        DefaultUndirectedGraph<Person, RelationshipEdge> g = createGraph(peopleList, relationshipList, parentList);
-        printGraph(g);
+        Scanner input = new Scanner(System.in);
+        boolean choiceExit = false;
+
+        do {
+            System.out.println("Family Graph Main Menu \n1. Explore Graph \n2. Add person \n3. Output file \n4. Import File \n5. Display graph \n6. Exit Program");
+            String choice = input.next();
+
+            switch (choice){
+                case "1":
+                    exploreGraph(g);
+                    break;
+
+                case "2":
+                    g = addPeople(g);
+                    break;
+
+                case "3":
+                    outputFile(g);
+                    break;
+
+                case "4":
+                    ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
+                    ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
+                    ArrayList<Hashtable<String,String>> parentList = parser.getParsedChild();
+                    g = createGraph(peopleList, relationshipList, parentList);
+                    break;
+
+                case "5":
+                    if(g != null)
+                    {
+                        printGraph(g);
+                    }
+                    else
+                    {
+                       System.out.println("The graph is currently empty, import a file or add people");
+                    }
+                    break;
+
+                case "6":
+                    System.out.println("Exiting now, thank you!");
+                    choiceExit = true;
+                    break;
+
+                default:
+                    System.out.println("Error, not a valid choice");
+            }
+        }while (!choiceExit);
 
         //PART C AND B WILL BE A NEW FUNCTION WILL BE CALLED HERE VIA A SIMPLE CONSOLE FRONT-END
+
+    }
+
+    //This function provides a menu with which to create a person and then add relationships to them
+    public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
+        Scanner input = new Scanner(System.in);
+        boolean continueChoice = false;
+
+        do{
+            Person newPerson = new Person();
+
+            boolean duplicateID = false;
+            do{
+                System.out.print("Enter a unique ID (required): ");
+                String choiceID = input.next();
+
+                //Needs to check if ID is reserved (Child) or exists already in g
+
+            }while (duplicateID);
+
+            //Need to add all other person info
+            //Need to allow for creating relationships -> A lookup?
+
+        }while (continueChoice);
+
+
+        return null;
+    }
+
+    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
+
+    }
+
+    public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
 
     }
 
