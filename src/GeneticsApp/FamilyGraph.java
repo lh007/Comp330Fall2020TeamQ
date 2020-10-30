@@ -13,7 +13,6 @@ public class FamilyGraph {
     //and print it
     public static void main(String[] args){
 
-
         //File parsers
         ParseFile parser = new ParseFile();
         DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
@@ -22,7 +21,10 @@ public class FamilyGraph {
         boolean choiceExit = false;
 
         do {
+            System.out.println("--------------------------------------------------------------");
             System.out.println("Family Graph Main Menu \n1. Explore Graph \n2. Add person \n3. Output file \n4. Import File \n5. Display graph \n6. Exit Program");
+            System.out.println("--------------------------------------------------------------");
+
             String choice = input.next();
 
             switch (choice){
@@ -74,6 +76,7 @@ public class FamilyGraph {
     public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g)
     {
         Scanner input = new Scanner(System.in);
+        String choiceID;
         boolean continueChoice = false;
 
         do{
@@ -82,29 +85,106 @@ public class FamilyGraph {
             boolean duplicateID = false;
             do{
                 System.out.print("Enter a unique ID (required): ");
-                String choiceID = input.next();
+                choiceID = input.next();
 
-                //Needs to check if ID is reserved (Child) or exists already in g
+                if(choiceID == "Child"){
+                    System.out.println("Reseverd ID chosen, choose again");
+                    duplicateID = true;
+                }
 
+                else
+                {
+                    GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
+                    while (iterator.hasNext())
+                    {
+                        Person person = iterator.next();
+//                        System.out.println(String.format("]%s[", person.getId()));
+//                        System.out.println(String.format("]%s[", choiceID));
+                        if(person.getId().toString().equals(choiceID))
+                        {
+                            System.out.println("Duplicate ID Found");
+                            duplicateID = true;
+                        }
+                    }
+                }
             }while (duplicateID);
+            newPerson.setId(choiceID);
 
-            //Need to add all other person info
-            //Need to allow for creating relationships -> A lookup?
+            System.out.println("For ANY selection, enter '-' to leave blank");
+            System.out.print("Select a first name: ");
+            String choiceFirstName = input.next();
+            if(choiceFirstName.equals("-"))
+            {
+                choiceFirstName = "";
+            }
+            newPerson.setFirstName(choiceFirstName);
+
+            System.out.print("Select a last name: ");
+            String choiceLastName = input.next();
+            if(choiceLastName.equals("-"))
+            {
+                choiceLastName = "";
+            }
+            newPerson.setLastName(choiceLastName);
+
+            System.out.print("Select a suffix: ");
+            String choiceSuffix = input.next();
+            if(choiceSuffix.equals("-"))
+            {
+                choiceSuffix = "";
+            }
+            newPerson.setSuffix(choiceSuffix);
+
+            System.out.println("Select a DOB (mm/dd/yyyy): ");
+            String choiceDOB = input.next();
+            if(choiceDOB.equals("-"))
+            {
+                choiceDOB = "";
+            }
+            newPerson.setDob(choiceDOB);
+
+            System.out.println("Select a birth place: ");
+            String choiceBirthPlace = input.next();
+            if(choiceBirthPlace.equals("-"))
+            {
+                choiceBirthPlace = "";
+            }
+            newPerson.setBirthPlace(choiceBirthPlace);
+
+            System.out.println("Select a DOD (mm/dd/yyyy): ");
+            String choiceDOD = input.next();
+            if(choiceDOD.equals("-"))
+            {
+                choiceDOD = "";
+            }
+            newPerson.setDod(choiceDOD);
+
+            System.out.println("Select a death place: ");
+            String choiceDeathPlace = input.next();
+            if(choiceDeathPlace.equals("-"))
+            {
+                choiceDeathPlace = "";
+            }
+            newPerson.setDeathPlace(choiceDeathPlace);
+
+
+            //TODO: Need to add all other person info
+            //TODO: Need to allow for creating relationships -> A lookup?
 
         }while (continueChoice);
-
-
+        
         return null;
     }
 
     public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g)
     {
-
+        //TODO: Be able to search the graph
+        //TODO: Be able to examine a person and their relationships
     }
 
     public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
     {
-
+        //TODO: Export graph to a CSV. Not a big concern
     }
 
     //Prints each vertex, it's name, and all its relationships
