@@ -75,11 +75,13 @@ public class FamilyGraph {
     //This function provides a menu with which to create a person and then add relationships to them
     public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g)
     {
-        Scanner input = new Scanner(System.in);
+
+        Scanner input = new Scanner(System.in); //This is how we get text input from the console
         String choiceID;
         boolean continueChoice = false;
 
         do{
+            //This is the person object we will be adding to the graph
             Person newPerson = new Person();
 
             boolean duplicateID = false;
@@ -89,13 +91,14 @@ public class FamilyGraph {
                 System.out.print("Enter a unique ID (required): ");
                 choiceID = input.next();
 
-                if(choiceID == "Child"){
+                if(choiceID == "Child"){ //Cannot make a relationship name a reserved word, this may not be necessary lmao
                     System.out.println("Reseverd ID chosen, choose again");
                     duplicateID = true;
                 }
 
                 else
                 {
+                    //This is how you iterrate through all the existing vertexes in our graph, looking to see if the chosen ID is a duplicate
                     GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
                     while (iterator.hasNext())
                     {
@@ -112,6 +115,7 @@ public class FamilyGraph {
             }while (duplicateID);
             newPerson.setId(choiceID);
 
+            //This is some pretty straightforward data entry, for each necessary aspect of a Person
             System.out.println("For ANY selection, enter '-' to leave blank");
             System.out.print("Select a first name: ");
             String choiceFirstName = input.next();
@@ -171,7 +175,7 @@ public class FamilyGraph {
 
             boolean stillAdding = true;
             do {
-                g.addVertex(newPerson); //THIS MAY NEED TO MOVE
+                g.addVertex(newPerson); //THIS MAY NEED TO MOVE, it adds the new person to the graph
                 System.out.println("--------------------------------------------------------");
                 System.out.println(String.format("ID: %s", choiceID));
                 System.out.println(String.format("First name: %s", choiceFirstName));
@@ -194,15 +198,17 @@ public class FamilyGraph {
                         String relatedID;
                         String relationshipType;
                         do {
+                            //I say this is a temp feature since we should prolly use the lookup being coded here
                             System.out.println("Enter the ID of the related person (TEMP-FEATURE)");
                             relatedID = input.next();
+
 
                             System.out.println(String.format("How is %s related to %s?", relatedID, choiceID));
                             System.out.println("\t1. Parent of \n\t2. Child of \n\t3. Partner of");
                             //TODO: Need to ask for start date, end date, and description
                             relationshipType = input.next();
 
-
+                            //In this section I'm looking to see if this ID exists in our graph. The functionality if it isnt is further down
                             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
                             while (iterator.hasNext())
                             {
@@ -214,27 +220,29 @@ public class FamilyGraph {
 
                                     switch (relationshipType)
                                     {
-                                        case "1":
+                                        case "1": //The parent case, where the new person is the parent
                                             Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
                                             parent.setFemaleParent(person);
                                             RelationshipEdge parentEdge = new RelationshipEdge(parent);
                                             g.addEdge(newPerson, person, parentEdge);
                                             break;
-                                        case "2":
+
+                                        case "2":  //The child case, where the new person is the child
                                             Relationship child = new Relationship(String.format("Child-%s", choiceID));
                                             child.setMaleParent(person);
                                             child.setFemaleParent(newPerson);
                                             RelationshipEdge childEdge = new RelationshipEdge(child);
                                             g.addEdge(person, newPerson, childEdge);
                                             break;
-                                        case "3":
+                                        case "3": //The partner case, where the new person is a partner
                                             boolean duplicateRelationship = false;
                                             String relationshipID;
                                             do {
                                                 System.out.print("Enter a unique relationship ID: ");
                                                 relationshipID = input.next();
 
+                                                //This is how we iterrate through all existing edges in our graph, looking for duplicate relationship ID
                                                 Set<RelationshipEdge> edges = g.edgeSet().stream().collect(Collectors.toSet());
                                                 for(RelationshipEdge edge : edges)
                                                 {
@@ -272,6 +280,7 @@ public class FamilyGraph {
 
                         break;
                     case "2":
+                        //TODO: Add the functionality here
                         break;
                     case "3":
                         stillAdding = false;
