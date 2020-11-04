@@ -29,7 +29,38 @@ public class FamilyGraph {
 
             switch (choice){
                 case "1":
-                    exploreGraph(g);
+                    if(g!=null) {
+                        System.out.println("--------------------------------------------------------------");
+                        System.out.println("Family Graph Main Menu \n1. Explore by first and last names \n2. Explore by first name \n3. Explore by last name ");
+                        System.out.println("--------------------------------------------------------------");
+                        String exploreChoice = input.next();
+
+                        switch (exploreChoice) {
+                            case "1":
+                                System.out.println("type the first name");
+                                String firstName = input.next();
+                                System.out.println("type the last name");
+                                String lastName = input.next();
+                                exploreGraph(g, firstName, lastName);
+                                break;
+                            case "2":
+                                System.out.println("type the first name");
+                                String firstNameOnly = input.next();
+                                exploreGraphFirst(g,firstNameOnly);
+                                break;
+                            case "3":
+                                System.out.println("type the last name");
+                                String lastNameOnly = input.next();
+                                exploreGraphLast(g,lastNameOnly);
+                                break;
+                            default:
+                                System.out.println("Error, not a valid choice");
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("The graph is currently empty, import a file or add people");
+                    }
                     break;
 
                 case "2":
@@ -293,10 +324,46 @@ public class FamilyGraph {
         return g;
     }
 
-    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName, String lastName)
     {
-        //TODO: Be able to search the graph
-        //TODO: Be able to examine a person and their relationships
+        Person start1 = g.vertexSet().stream().filter(uri -> uri.getFirstName().equals(firstName)).findAny().get();
+        Iterator<Person> iterator = new DepthFirstIterator<>(g, start1);
+        System.out.println("People with the first name: "+ firstName + ", and last name of: "+lastName);
+        while (iterator.hasNext()) {
+            Person selectedNameNodes = iterator.next();
+            if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName) && selectedNameNodes.getLastName().equals(lastName)) {
+                System.out.println(selectedNameNodes.getFirstName()+ " " + selectedNameNodes.getLastName());
+                System.out.println("----------------");
+            }
+        }
+
+    }
+    public static void exploreGraphFirst(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName)
+    {
+
+        Person start = g.vertexSet().stream().filter(person -> person.getFirstName().equals(firstName)).findAny().get();
+        Iterator<Person> iterator = new BreadthFirstIterator<>(g, start);
+        System.out.println("People with the first name of: "+ firstName);
+        while (iterator.hasNext()) {
+            Person selectedNameNodes = iterator.next();
+            if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName)) {
+                System.out.println(selectedNameNodes.getFirstName()+ " " + selectedNameNodes.getLastName());
+                System.out.println("----------------");
+            }
+        }
+    }
+    public static void exploreGraphLast(DefaultUndirectedGraph<Person, RelationshipEdge> g, String lastName)
+    {
+        Person start = g.vertexSet().stream().filter(uri -> uri.getLastName().equals(lastName)).findAny().get();
+        Iterator<Person> iterator = new DepthFirstIterator<>(g, start);
+        System.out.println("People with the last name of: "+ lastName);
+        while (iterator.hasNext()) {
+            Person selectedNameNodes = iterator.next();
+            if(selectedNameNodes.getLastName()!=null && selectedNameNodes.getLastName().equals(lastName)) {
+                System.out.println(selectedNameNodes.firstName + " " + selectedNameNodes.lastName);
+                System.out.println("----------------");
+            }
+        }
     }
 
     public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
