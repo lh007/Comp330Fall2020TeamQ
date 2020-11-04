@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class ParseFile {
+    
     String file = "FamilyTreeInputTextFile.txt"; //name of file to parse, prob want it to look for the csv file too
     ArrayList<Hashtable<String,String>> parsedPerson = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedRelationship = new ArrayList<>();
