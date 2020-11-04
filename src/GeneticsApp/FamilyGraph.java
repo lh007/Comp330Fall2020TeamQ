@@ -332,8 +332,7 @@ public class FamilyGraph {
         while (iterator.hasNext()) {
             Person selectedNameNodes = iterator.next();
             if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName) && selectedNameNodes.getLastName().equals(lastName)) {
-                System.out.println(selectedNameNodes.getFirstName()+ " " + selectedNameNodes.getLastName());
-                System.out.println("----------------");
+                printNode(selectedNameNodes);
             }
         }
 
@@ -347,8 +346,7 @@ public class FamilyGraph {
         while (iterator.hasNext()) {
             Person selectedNameNodes = iterator.next();
             if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName)) {
-                System.out.println(selectedNameNodes.getFirstName()+ " " + selectedNameNodes.getLastName());
-                System.out.println("----------------");
+                printNode(selectedNameNodes);
             }
         }
     }
@@ -360,10 +358,19 @@ public class FamilyGraph {
         while (iterator.hasNext()) {
             Person selectedNameNodes = iterator.next();
             if(selectedNameNodes.getLastName()!=null && selectedNameNodes.getLastName().equals(lastName)) {
-                System.out.println(selectedNameNodes.firstName + " " + selectedNameNodes.lastName);
-                System.out.println("----------------");
+                printNode(selectedNameNodes);
             }
         }
+    }
+
+    public static void printNode(Person p){
+        System.out.println("ID: " + p.getId());
+        System.out.println(p.getFirstName()+ " " + p.getLastName());
+        System.out.println("suffix: " + p.getSuffix());
+        System.out.println("born: " + p.getDob() + " location: " + p.getBirthPlace());
+        System.out.println("died: " + p.getDod() + " location: " + p.getDeathPlace());
+        System.out.println("parents: " + p.getParents());
+        System.out.println("----------------");
     }
 
     public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
