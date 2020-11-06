@@ -239,7 +239,7 @@ public class FamilyGraph {
 
                                         // There is something weird going on with cases 1 and 2. Not sure if they are working as intended
                                         case "1": //The parent case, where the new person is the parent
-                                            Relationship parent = new Relationship(String.format("Parent %s", relatedID));
+                                            Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
                                             parent.setFemaleParent(person);
                                             RelationshipEdge parentEdge = new RelationshipEdge(parent);
@@ -247,7 +247,7 @@ public class FamilyGraph {
                                             break;
 
                                         case "2":  //The child case, where the new person is the child
-                                            Relationship child = new Relationship(String.format("Child %s", choiceID));
+                                            Relationship child = new Relationship(String.format("Child-%s", choiceID));
                                             child.setMaleParent(person);
                                             child.setFemaleParent(newPerson);
                                             RelationshipEdge childEdge = new RelationshipEdge(child);
