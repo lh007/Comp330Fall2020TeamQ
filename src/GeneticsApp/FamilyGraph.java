@@ -11,11 +11,12 @@ public class FamilyGraph {
 
     //Currently main gets the three parsed sections of the input file then uses them to build a graph
     //and print it
-    public static void main(String[] args){
 
+    public static void main(String[] args) {
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
         //File parsers
         ParseFile parser = new ParseFile();
-        DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
+
 
         Scanner input = new Scanner(System.in);
         boolean choiceExit = false;
@@ -27,9 +28,9 @@ public class FamilyGraph {
 
             String choice = input.next();
 
-            switch (choice){
+            switch (choice) {
                 case "1":
-                    if(g!=null) {
+                    if (g != null) {
                         System.out.println("--------------------------------------------------------------");
                         System.out.println("Family Graph Main Menu \n1. Explore by first and last names \n2. Explore by first name \n3. Explore by last name ");
                         System.out.println("--------------------------------------------------------------");
@@ -46,19 +47,17 @@ public class FamilyGraph {
                             case "2":
                                 System.out.println("type the first name");
                                 String firstNameOnly = input.next();
-                                exploreGraphFirst(g,firstNameOnly);
+                                exploreGraphFirst(g, firstNameOnly);
                                 break;
                             case "3":
                                 System.out.println("type the last name");
                                 String lastNameOnly = input.next();
-                                exploreGraphLast(g,lastNameOnly);
+                                exploreGraphLast(g, lastNameOnly);
                                 break;
                             default:
                                 System.out.println("Error, not a valid choice");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("The graph is currently empty, import a file or add people");
                     }
                     break;
@@ -72,20 +71,17 @@ public class FamilyGraph {
                     break;
 
                 case "4":
-                    ArrayList<Hashtable<String,String>> peopleList = parser.getParsedPeople();
-                    ArrayList<Hashtable<String,String>> relationshipList = parser.getParsedRelationship();
-                    ArrayList<Hashtable<String,String>> parentList = parser.getParsedChild();
+                    ArrayList<Hashtable<String, String>> peopleList = parser.getParsedPeople();
+                    ArrayList<Hashtable<String, String>> relationshipList = parser.getParsedRelationship();
+                    ArrayList<Hashtable<String, String>> parentList = parser.getParsedChild();
                     g = createGraph(peopleList, relationshipList, parentList);
                     break;
 
                 case "5":
-                    if(g != null)
-                    {
+                    if (g != null) {
                         printGraph(g);
-                    }
-                    else
-                    {
-                       System.out.println("The graph is currently empty, import a file or add people");
+                    } else {
+                        System.out.println("The graph is currently empty, import a file or add people");
                     }
                     break;
 
@@ -97,109 +93,96 @@ public class FamilyGraph {
                 default:
                     System.out.println("Error, not a valid choice");
             }
-        }while (!choiceExit);
+        } while (!choiceExit);
 
         //PART C AND B WILL BE A NEW FUNCTION WILL BE CALLED HERE VIA A SIMPLE CONSOLE FRONT-END
 
     }
 
     //This function provides a menu with which to create a person and then add relationships to them
-    public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g)
-    {
+    public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g) {
 
         Scanner input = new Scanner(System.in); //This is how we get text input from the console
         String choiceID;
         boolean continueChoice = false;
 
-        do{
+        do {
             //This is the person object we will be adding to the graph
             Person newPerson = new Person();
 
             boolean duplicateID = false;
 
             //TODO: This whole checking for a duplicate ID in the graph should become a function
-            do{
+            do {
                 System.out.print("Enter a unique ID (required): ");
                 choiceID = input.next();
 
-                if(choiceID == "Child"){ //Cannot make a relationship name a reserved word, this may not be necessary lmao
+                if (choiceID == "Child") { //Cannot make a relationship name a reserved word, this may not be necessary lmao
                     System.out.println("Reseverd ID chosen, choose again");
                     duplicateID = true;
-                }
-
-                else
-                {
+                } else {
                     //This is how you iterrate through all the existing vertexes in our graph, looking to see if the chosen ID is a duplicate
                     GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
-                    while (iterator.hasNext())
-                    {
+                    while (iterator.hasNext()) {
                         Person person = iterator.next();
 //                        System.out.println(String.format("]%s[", person.getId()));
 //                        System.out.println(String.format("]%s[", choiceID));
-                        if(person.getId().toString().equals(choiceID))
-                        {
+                        if (person.getId().toString().equals(choiceID)) {
                             System.out.println("Duplicate ID Found");
                             duplicateID = true;
                         }
                     }
                 }
-            }while (duplicateID);
+            } while (duplicateID);
             newPerson.setId(choiceID);
 
             //This is some pretty straightforward data entry, for each necessary aspect of a Person
             System.out.println("For ANY selection, enter '-' to leave blank");
             System.out.print("Select a first name: ");
             String choiceFirstName = input.next();
-            if(choiceFirstName.equals("-"))
-            {
+            if (choiceFirstName.equals("-")) {
                 choiceFirstName = "";
             }
             newPerson.setFirstName(choiceFirstName);
 
             System.out.print("Select a last name: ");
             String choiceLastName = input.next();
-            if(choiceLastName.equals("-"))
-            {
+            if (choiceLastName.equals("-")) {
                 choiceLastName = "";
             }
             newPerson.setLastName(choiceLastName);
 
             System.out.print("Select a suffix: ");
             String choiceSuffix = input.next();
-            if(choiceSuffix.equals("-"))
-            {
+            if (choiceSuffix.equals("-")) {
                 choiceSuffix = "";
             }
             newPerson.setSuffix(choiceSuffix);
 
             System.out.print("Select a DOB (mm/dd/yyyy): ");
             String choiceDOB = input.next();
-            if(choiceDOB.equals("-"))
-            {
+            if (choiceDOB.equals("-")) {
                 choiceDOB = "";
             }
             newPerson.setDob(choiceDOB);
 
             System.out.print("Select a birth place: ");
             String choiceBirthPlace = input.next();
-            if(choiceBirthPlace.equals("-"))
-            {
+            if (choiceBirthPlace.equals("-")) {
                 choiceBirthPlace = "";
             }
             newPerson.setBirthPlace(choiceBirthPlace);
 
             System.out.print("Select a DOD (mm/dd/yyyy): ");
             String choiceDOD = input.next();
-            if(choiceDOD.equals("-"))
-            {
+            if (choiceDOD.equals("-")) {
                 choiceDOD = "";
             }
             newPerson.setDod(choiceDOD);
 
             System.out.print("Select a death place: ");
             String choiceDeathPlace = input.next();
-            if(choiceDeathPlace.equals("-"))
-            {
+            if (choiceDeathPlace.equals("-")) {
                 choiceDeathPlace = "";
             }
             newPerson.setDeathPlace(choiceDeathPlace);
@@ -223,7 +206,7 @@ public class FamilyGraph {
                 //TODO: Currently, confirm addition does the same thing as return to menu. Change that so that returning to menu
                 //DOES NOT change the loaded graph, this will require work in main
 
-                switch (choiceOption){
+                switch (choiceOption) {
                     case "1":
                         boolean IDNotFound = true;
                         String relatedID;
@@ -241,16 +224,14 @@ public class FamilyGraph {
 
                             //In this section I'm looking to see if this ID exists in our graph. The functionality if it isnt is further down
                             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
-                            while (iterator.hasNext())
-                            {
+                            while (iterator.hasNext()) {
                                 Person person = iterator.next();
-                                if(person.getId().toString().equals(relatedID))
-                                {
+                                if (person.getId().toString().equals(relatedID)) {
                                     System.out.println(String.format("%s found", relatedID));
                                     IDNotFound = false;
 
-                                    switch (relationshipType)
-                                    {
+
+                                    switch (relationshipType) {
                                         case "1": //The parent case, where the new person is the parent
                                             Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
@@ -275,16 +256,15 @@ public class FamilyGraph {
 
                                                 //This is how we iterrate through all existing edges in our graph, looking for duplicate relationship ID
                                                 Set<RelationshipEdge> edges = g.edgeSet().stream().collect(Collectors.toSet());
-                                                for(RelationshipEdge edge : edges)
-                                                {
+                                                for (RelationshipEdge edge : edges) {
                                                     String currentEdgeID = edge.getLabel().getId();
-                                                    if(relationshipID == currentEdgeID)
-                                                    {
+                                                    if (relationshipID == currentEdgeID) {
+
                                                         duplicateRelationship = true;
                                                         System.out.println("Duplicate relationship ID found, choose another");
                                                     }
                                                 }
-                                            } while(duplicateRelationship);
+                                            } while (duplicateRelationship);
                                             Relationship partner = new Relationship(relationshipID);
                                             partner.setMaleParent(newPerson);
                                             partner.setFemaleParent(person);
@@ -294,12 +274,11 @@ public class FamilyGraph {
                                     }
                                 }
                             }
-                            if(IDNotFound)
-                            {
+                            if (IDNotFound) {
                                 System.out.println("ID not found, would you like to search again or return to person creation? \n\t1. Look for different ID \n\t2. Return to creation");
                                 //TODO: Add a third option to create a new person with the searched ID
                                 String keepTrying = input.next();
-                                switch (keepTrying){
+                                switch (keepTrying) {
                                     case "1":
                                         break;
                                     case "2":
@@ -307,7 +286,7 @@ public class FamilyGraph {
                                         break;
                                 }
                             }
-                        }while(IDNotFound);
+                        } while (IDNotFound);
 
                         break;
                     case "2":
@@ -318,54 +297,53 @@ public class FamilyGraph {
                         continueChoice = false;
                         break;
                 }
-            }while(stillAdding);
-        }while (continueChoice);
-        
+            } while (stillAdding);
+        } while (continueChoice);
+
         return g;
     }
 
-    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName, String lastName)
-    {
+    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName, String lastName) {
         Person start1 = g.vertexSet().stream().filter(uri -> uri.getFirstName().equals(firstName)).findAny().get();
         Iterator<Person> iterator = new DepthFirstIterator<>(g, start1);
-        System.out.println("People with the first name: "+ firstName + ", and last name of: "+lastName);
+        System.out.println("People with the first name: " + firstName + ", and last name of: " + lastName);
         while (iterator.hasNext()) {
             Person selectedNameNodes = iterator.next();
-            if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName) && selectedNameNodes.getLastName().equals(lastName)) {
+            if (selectedNameNodes.getFirstName() != null && selectedNameNodes.getFirstName().equals(firstName) && selectedNameNodes.getLastName().equals(lastName)) {
                 printNode(selectedNameNodes);
             }
         }
 
     }
-    public static void exploreGraphFirst(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName)
-    {
+
+    public static void exploreGraphFirst(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName) {
 
         Person start = g.vertexSet().stream().filter(person -> person.getFirstName().equals(firstName)).findAny().get();
         Iterator<Person> iterator = new BreadthFirstIterator<>(g, start);
-        System.out.println("People with the first name of: "+ firstName);
+        System.out.println("People with the first name of: " + firstName);
         while (iterator.hasNext()) {
             Person selectedNameNodes = iterator.next();
-            if(selectedNameNodes.getFirstName()!=null && selectedNameNodes.getFirstName().equals(firstName)) {
-                printNode(selectedNameNodes);
-            }
-        }
-    }
-    public static void exploreGraphLast(DefaultUndirectedGraph<Person, RelationshipEdge> g, String lastName)
-    {
-        Person start = g.vertexSet().stream().filter(uri -> uri.getLastName().equals(lastName)).findAny().get();
-        Iterator<Person> iterator = new DepthFirstIterator<>(g, start);
-        System.out.println("People with the last name of: "+ lastName);
-        while (iterator.hasNext()) {
-            Person selectedNameNodes = iterator.next();
-            if(selectedNameNodes.getLastName()!=null && selectedNameNodes.getLastName().equals(lastName)) {
+            if (selectedNameNodes.getFirstName() != null && selectedNameNodes.getFirstName().equals(firstName)) {
                 printNode(selectedNameNodes);
             }
         }
     }
 
-    public static void printNode(Person p){
+    public static void exploreGraphLast(DefaultUndirectedGraph<Person, RelationshipEdge> g, String lastName) {
+        Person start = g.vertexSet().stream().filter(uri -> uri.getLastName().equals(lastName)).findAny().get();
+        Iterator<Person> iterator = new DepthFirstIterator<>(g, start);
+        System.out.println("People with the last name of: " + lastName);
+        while (iterator.hasNext()) {
+            Person selectedNameNodes = iterator.next();
+            if (selectedNameNodes.getLastName() != null && selectedNameNodes.getLastName().equals(lastName)) {
+                printNode(selectedNameNodes);
+            }
+        }
+    }
+
+    public static void printNode(Person p) {
         System.out.println("ID: " + p.getId());
-        System.out.println(p.getFirstName()+ " " + p.getLastName());
+        System.out.println(p.getFirstName() + " " + p.getLastName());
         System.out.println("suffix: " + p.getSuffix());
         System.out.println("born: " + p.getDob() + " location: " + p.getBirthPlace());
         System.out.println("died: " + p.getDod() + " location: " + p.getDeathPlace());
@@ -373,14 +351,12 @@ public class FamilyGraph {
         System.out.println("----------------");
     }
 
-    public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
-    {
+    public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g) {
         //TODO: Export graph to a CSV. Not a big concern
     }
 
     //Prints each vertex, it's name, and all its relationships
-    public static void printGraph(DefaultUndirectedGraph familyTree)
-    {
+    public static void printGraph(DefaultUndirectedGraph familyTree) {
         //Create an iterator with which to traverse the graph
         GraphIterator<Person, RelationshipEdge> iterator =
                 new BreadthFirstIterator<Person, RelationshipEdge>(familyTree);
@@ -394,7 +370,7 @@ public class FamilyGraph {
             Set<RelationshipEdge> relationships = familyTree.edgesOf(man);
 
             //Iterate across all associated edges
-            for(RelationshipEdge connection : relationships){
+            for (RelationshipEdge connection : relationships) {
                 //Get the ID of the male and female parent of this relationships
                 String maleID = connection.getLabel().getMaleParent().getId();
                 String femaleID = connection.getLabel().getFemaleParent().getId();
@@ -404,56 +380,57 @@ public class FamilyGraph {
 
                 //Checks to see if the current person is the MALE or FEMALE in this relationships
                 //Sets whichever the person ISNT as the connectedTo ID
-                if(manID == maleID)
-                {
+                if (manID == maleID) {
                     connectedTo = femaleID;
-                }
-                else if (manID == femaleID)
-                {
+                } else if (manID == femaleID) {
                     connectedTo = maleID;
-                }
-                else
-                {
-                    System.out.print("This shouldnt happen");
-                }
+                } else {
+                   System.out.print("This shouldnt happen");         ///UNCOMMENT
+                 }
 
                 //THIS IS ROUGHLY WHERE PART D IS RELEVANT!
 
                 //This sections attempts to discern from the relationship ID what TYPE of relationship
                 //this is and add it to the string output for this person.
                 String[] list = connection.getLabel().getId().split("-");
-                if (list[0].equals("Child"))
-                {
-                    if(list[1].equals(manID))
-                    {
+
+
+                if (list[0].equals("Child")) {
+
+                    if (list[1].equals(manID)) {
+
                         relatedOutput = relatedOutput + String.format("\tChild of %s\n", connectedTo);
-                    }
-                    else
-                    {
+
+                    } else {
                         relatedOutput = relatedOutput + String.format("\tParent of %s\n", connectedTo);
+
                     }
+
+                } else
+                    if(connectedTo != manID )
+                    {
+                        relatedOutput = relatedOutput + String.format("\tIn relationship %s to %s\n",connection.getLabel().getId(),maleID);
+                    }
+
+
                 }
-                else {
-                    relatedOutput = relatedOutput + String.format("\tIn relationship %s to %s\n", connection.getLabel().getId(), connectedTo);
-                }
-            }
-            //Print the person ID, their name, and the related output built above
-            System.out.println(String.format("ID: %s", man.getId()));
-            System.out.println(String.format("\tFirst name: %s\n\tLast name: %s", man.getFirstName(), man.getLastName()));
-            System.out.print(relatedOutput);
+
+                //Print the person ID, their name, and the related output built above
+                System.out.println(String.format("ID: %s", man.getId()));
+                System.out.println(String.format("\tFirst name: %s\n\tLast name: %s", man.getFirstName(), man.getLastName()));
+                System.out.print(relatedOutput);
+
 
         }
     }
 
-    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList)
-    {
+    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList) {
         DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
         //This first section iterates through the list of People we need to create and sets a Person
         //object with all the correct data for that person
         int i;
-        for(i = 0; i < people.size(); i++)
-        {
+        for (i = 0; i < people.size(); i++) {
             Hashtable personData = people.get(i);
             String id = (String) personData.get("Key");
             Person person = new Person();
@@ -467,7 +444,7 @@ public class FamilyGraph {
             person.setDod((String) personData.get("DOD"));
             person.setBirthPlace((String) personData.get("BirthPlace"));
             person.setDeathPlace((String) personData.get("DeathPlace"));
-            person.setParents((String)personData.get("Parents"));
+            person.setParents((String) personData.get("Parents"));
 
             //Add this person as a vertex on the graph
             g.addVertex(person);
@@ -475,8 +452,7 @@ public class FamilyGraph {
 
 
         //This section iterates through the imported relationships
-        for(i = 0; i < relationships.size(); i++)
-        {
+        for (i = 0; i < relationships.size(); i++) {
             Hashtable relationshipData = relationships.get(i);
             String id = (String) relationshipData.get("Key");
             Relationship r = new Relationship(id);
@@ -485,21 +461,15 @@ public class FamilyGraph {
             String femaleID;
 
             //If a parent ID is null set it to unknown, otherwise set it to the imported value
-            if(relationshipData.get("MaleParent").toString().isEmpty())
-            {
+            if (relationshipData.get("MaleParent").toString().isEmpty()) {
                 maleID = "Unknown";
-            }
-            else
-            {
+            } else {
                 maleID = (String) relationshipData.get("MaleParent");
             }
 
-            if(relationshipData.get("FemaleParent").toString().isEmpty())
-            {
+            if (relationshipData.get("FemaleParent").toString().isEmpty()) {
                 femaleID = "Unknown";
-            }
-            else
-            {
+            } else {
                 femaleID = (String) relationshipData.get("FemaleParent");
             }
 
@@ -512,26 +482,21 @@ public class FamilyGraph {
                 Person person = iterator.next();
 
                 //If the maleID is equal to another persons, then set them to their associated parents
-                if(person.getId().equals(maleID))
-                {
+                if (person.getId().equals(maleID)) {
                     male = person;
-                }
-                else if (person.getId().equals(femaleID))
-                {
+                } else if (person.getId().equals(femaleID)) {
                     female = person;
                 }
             }
 
             //If the person is unknown, set their ID to unknown person and add to the vertex
-            if(male.getId() == null)
-            {
+            if (male.getId() == null) {
                 male.setId("Unknown Person");
                 g.addVertex(male);
             }
 
-            if (female.getId() == null)
-            {
-                female.setId("Unknown person");
+            if (female.getId() == null) {
+                female.setId("Unknown Person");
                 g.addVertex(female);
             }
 
@@ -553,51 +518,156 @@ public class FamilyGraph {
         Set<RelationshipEdge> edges = g.edgeSet().stream().collect(Collectors.toSet());
 
 
-        for(int index = 0; index < parentList.size(); index++)
-        {
+        for (int index = 0; index < parentList.size(); index++) {
             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
             while (iterator.hasNext()) {
                 Person man = iterator.next();
 
-                if(parentList.get(index).get("Child").equals(man.getId()))
-                {
+                if (parentList.get(index).get("Child").equals(man.getId())) {
+
+
 //                    System.out.println(String.format("%s equal to %s", parentList.get(index).get("Child"), man.getId()));
 
                     Person maleParent = new Person();
                     Person femaleParent = new Person();
+                    Person grandma1 = new Person();
+                    Person grandma2 = new Person();
+                    Person grandpa1 = new Person();
+                    Person grandpa2 = new Person();
 
 
-                    for(RelationshipEdge edge : edges)
-                    {
+
+                    //  System.out.println(parentList.get(index).toString());
+                    for (RelationshipEdge edge : edges) {
                         String currentEdgeID = edge.getLabel().getId();
                         String partnershipID = parentList.get(index).get("Partnership");
 
-                        if(currentEdgeID.equals(partnershipID))
-                        {
+                        if (currentEdgeID.equals(partnershipID)) {
+
 //                            System.out.println(String.format("%s equal to %s", currentEdgeID, partnershipID));
 
                             maleParent = edge.getLabel().getMaleParent();
                             femaleParent = edge.getLabel().getFemaleParent();
+                            //System.out.println(man.getId());
 
-                            Relationship maleRelationship = new Relationship(String.format("Child-%s",  man.getId()));
-                            maleRelationship.setMaleParent(maleParent);
-                            maleRelationship.setFemaleParent(man);
-                            RelationshipEdge maleEdge = new RelationshipEdge(maleRelationship);
-                            g.addEdge(man, maleParent, maleEdge);
+                            for (int index1 = 0; index1 < parentList.size(); index1++) {
+                                if (parentList.get(index1).get("Child").equals(femaleParent.getId())) {
 
-                            Relationship femaleRelationship = new Relationship(String.format("Child-%s", man.getId()));
-                            femaleRelationship.setMaleParent(femaleParent);
-                            femaleRelationship.setFemaleParent(man);
-                            RelationshipEdge femaleEdge = new RelationshipEdge(femaleRelationship);
-                            g.addEdge(man, femaleParent, femaleEdge);
-                        }
+                                    for (RelationshipEdge edge1 : edges) {
+                                        if (edge1.getLabel().getId().equals(parentList.get(index1).get("Partnership"))) {
+
+                                            grandma1 = edge1.getLabel().getFemaleParent();
+                                            grandpa1 = edge1.getLabel().getMaleParent();
+
+
+                                        }
+
+
+                                    }
+                                }
+                            }
+                            for (int index1 = 0; index1 < parentList.size(); index1++) {
+                                if (parentList.get(index1).get("Child").equals(maleParent.getId())) {
+
+                                    for (RelationshipEdge edge1 : edges) {
+                                        if (edge1.getLabel().getId().equals(parentList.get(index1).get("Partnership"))) {
+                                            grandma2 = edge1.getLabel().getFemaleParent();
+                                            grandpa2 = edge1.getLabel().getMaleParent();
+
+                                        }
+
+                                    }
+                                }
+
+                            }
+                            /*
+                            if(grandpa1.getId() != null && grandpa1.getId() != "Unknown Person" && grandpa1.getId() != "Unknown person")
+                            {
+                                System.out.println(grandpa1.getId());
+
+                            }
+
+
+                            if(grandma1.getId() != null && grandma1.getId() != "Unknown Person" && grandma1.getId() != "Unknown person")
+                            {
+                                System.out.println(grandma1.getId());
+                            }
+
+                            if(grandpa2.getId() != null && grandpa2.getId() != "Unknown Person" && grandpa2.getId() != "Unknown person")
+                            {
+                                System.out.println(grandpa2.getId());
+                            }
+
+                            if(grandma2.getId() != null && grandma2.getId() != "Unknown Person"  && grandma2.getId() != "Unknown person")
+                            {
+                                System.out.println(grandma2.getId());
+                            }
+
+                            */
+
+                    if ( grandpa1.getId() != null  && grandpa1.getId() != "Unknown Person"  && man.getId() != grandpa1.getId()) {
+                           // if(man.getId() != null && man.getId() != "Unknown person") {
+
+                                Relationship grandmaRelationship1 = new Relationship(String.format("Grandparent Are - %s",man.getId()));
+                                grandmaRelationship1.setMaleParent(grandpa1);
+                               grandmaRelationship1.setFemaleParent(man);
+                                RelationshipEdge grandparentRelation1 = new RelationshipEdge(grandmaRelationship1);
+                                g.addEdge(man, grandpa1, grandparentRelation1);
+                            }
+
+
+                    if (grandma1.getId() != null && grandma1.getId() != null  && grandma1.getId() != "Unknown Person" && man.getId() != grandma1.getId()) {
+
+                        Relationship grandmaRelationship2 = new Relationship(String.format("Grandparents Are - %s", man.getId()));
+                        grandmaRelationship2.setMaleParent(grandma1);
+                       grandmaRelationship2.setFemaleParent(man);
+                        RelationshipEdge grandparentRelation2 = new RelationshipEdge(grandmaRelationship2);
+                        g.addEdge(man, grandma1, grandparentRelation2);
+                    }
+                    if (grandpa2.getId() != null && grandpa2.getId() != null  && grandpa2.getId() != "Unknown Person"  && man.getId() != grandpa2.getId()) {
+
+                        Relationship grandmaRelationship3 = new Relationship(String.format("Grandparents Are - %s", man.getId()));
+                        grandmaRelationship3.setMaleParent(grandpa2);
+                        grandmaRelationship3.setFemaleParent(man);
+                        RelationshipEdge grandparentRelation3 = new RelationshipEdge(grandmaRelationship3);
+                        g.addEdge(man, grandpa2, grandparentRelation3);
+                    }
+                    if (grandma2.getId() != null && grandma2.getId() != null  && grandma2.getId() != "Unknown Person"  &&  man.getId() != grandma2.getId()) {
+
+                        Relationship grandmaRelationship4 = new Relationship(String.format("Grandparents Are - %s", man.getId()));
+                        grandmaRelationship4.setMaleParent(grandma2);
+                        grandmaRelationship4.setFemaleParent(man);
+                        RelationshipEdge grandparentRelation4 = new RelationshipEdge(grandmaRelationship4);
+                        g.addEdge(man, grandma2, grandparentRelation4);
                     }
 
-                }
+                    Relationship maleRelationship = new Relationship(String.format("Child-%s", man.getId()));
+                    maleRelationship.setMaleParent(maleParent);
+                    maleRelationship.setFemaleParent(man);
+                    RelationshipEdge maleEdge = new RelationshipEdge(maleRelationship);
+                    g.addEdge(man, maleParent, maleEdge);
 
+                    Relationship femaleRelationship = new Relationship(String.format("Child-%s", man.getId()));
+                    femaleRelationship.setMaleParent(femaleParent);
+                    femaleRelationship.setFemaleParent(man);
+                    RelationshipEdge femaleEdge = new RelationshipEdge(femaleRelationship);
+                    g.addEdge(man, femaleParent, femaleEdge);
+
+
+
+
+                        }
+                    }
+                }
             }
+
         }
-        return g;
+
+            return g;
+
+        }
     }
-}
+
+
+
 
