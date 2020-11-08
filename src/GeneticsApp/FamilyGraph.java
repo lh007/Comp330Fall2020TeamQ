@@ -23,7 +23,7 @@ public class FamilyGraph {
 
         do {
             System.out.println("--------------------------------------------------------------");
-            System.out.println("Family Graph Main Menu \n1. Explore Graph \n2. Add person \n3. Output file \n4. Import File \n5. Display graph \n6. Exit Program");
+            System.out.println("Family Graph Main Menu\n \n1. Explore Graph \n2. Add person \n3. Output file \n4. Import File \n5. Display graph \n6. Exit Program");
             System.out.println("--------------------------------------------------------------");
 
             String choice = input.next();
@@ -32,7 +32,7 @@ public class FamilyGraph {
                 case "1":
                     if (g != null) {
                         System.out.println("--------------------------------------------------------------");
-                        System.out.println("Family Graph Main Menu \n1. Explore by first and last names \n2. Explore by first name \n3. Explore by last name ");
+                        System.out.println("Exploring Menu\n \n1. Explore by first and last names \n2. Explore by first name \n3. Explore by last name ");
                         System.out.println("--------------------------------------------------------------");
                         String exploreChoice = input.next();
 
@@ -57,8 +57,11 @@ public class FamilyGraph {
                             default:
                                 System.out.println("Error, not a valid choice");
                         }
-                    } else {
-                        System.out.println("The graph is currently empty, import a file or add people");
+
+                    } 
+                    else
+                    {
+                        System.out.println("\nThe graph is currently empty. Please import a file or add people.\n");
                     }
                     break;
 
@@ -75,25 +78,32 @@ public class FamilyGraph {
                     ArrayList<Hashtable<String, String>> relationshipList = parser.getParsedRelationship();
                     ArrayList<Hashtable<String, String>> parentList = parser.getParsedChild();
                     g = createGraph(peopleList, relationshipList, parentList);
+
+                    System.out.println("\nFile successfully imported. Returning to main menu.\n");
+
                     break;
 
                 case "5":
                     if (g != null) {
                         printGraph(g);
-                    } else {
-                        System.out.println("The graph is currently empty, import a file or add people");
+
+                    }
+                    else
+                    {
+                       System.out.println("\nThe graph is currently empty. Please import a file or add people.\n");
                     }
                     break;
 
                 case "6":
-                    System.out.println("Exiting now, thank you!");
+                    System.out.println("\nExiting now. Thank you!\n");
                     choiceExit = true;
                     break;
 
                 default:
-                    System.out.println("Error, not a valid choice");
+                    System.out.println("\nError: Not a valid choice.\n");
             }
-        } while (!choiceExit);
+
+        }   while (!choiceExit);
 
         //PART C AND B WILL BE A NEW FUNCTION WILL BE CALLED HERE VIA A SIMPLE CONSOLE FRONT-END
 
@@ -102,95 +112,77 @@ public class FamilyGraph {
     //This function provides a menu with which to create a person and then add relationships to them
     public static DefaultUndirectedGraph addPeople(DefaultUndirectedGraph<Person, RelationshipEdge> g) {
 
-        Scanner input = new Scanner(System.in); //This is how we get text input from the console
-        String choiceID;
+        Scanner input = new Scanner(System.in);
+        String choiceID = null;
         boolean continueChoice = false;
 
         do {
             //This is the person object we will be adding to the graph
             Person newPerson = new Person();
 
-            boolean duplicateID = false;
-
-            //TODO: This whole checking for a duplicate ID in the graph should become a function
-            do {
-                System.out.print("Enter a unique ID (required): ");
-                choiceID = input.next();
-
-                if (choiceID == "Child") { //Cannot make a relationship name a reserved word, this may not be necessary lmao
-                    System.out.println("Reseverd ID chosen, choose again");
-                    duplicateID = true;
-                } else {
-                    //This is how you iterrate through all the existing vertexes in our graph, looking to see if the chosen ID is a duplicate
-                    GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
-                    while (iterator.hasNext()) {
-                        Person person = iterator.next();
-//                        System.out.println(String.format("]%s[", person.getId()));
-//                        System.out.println(String.format("]%s[", choiceID));
-                        if (person.getId().toString().equals(choiceID)) {
-                            System.out.println("Duplicate ID Found");
-                            duplicateID = true;
-                        }
-                    }
-                }
-            } while (duplicateID);
+            choiceID = checkIfDuplicateID(choiceID, g); // Function call that checks if the input entered by the user already exists in the graph
             newPerson.setId(choiceID);
 
             //This is some pretty straightforward data entry, for each necessary aspect of a Person
-            System.out.println("For ANY selection, enter '-' to leave blank");
-            System.out.print("Select a first name: ");
+            System.out.println("\n...");
+            System.out.println("ID accepted.\n");
+            System.out.println("For ANY selection, enter '-' to leave blank.\n");
+            System.out.print("Enter a first name: ");
             String choiceFirstName = input.next();
             if (choiceFirstName.equals("-")) {
                 choiceFirstName = "";
             }
             newPerson.setFirstName(choiceFirstName);
 
-            System.out.print("Select a last name: ");
+            System.out.print("Enter a last name: ");
             String choiceLastName = input.next();
             if (choiceLastName.equals("-")) {
                 choiceLastName = "";
             }
             newPerson.setLastName(choiceLastName);
 
-            System.out.print("Select a suffix: ");
+            System.out.print("Enter a suffix: ");
             String choiceSuffix = input.next();
             if (choiceSuffix.equals("-")) {
                 choiceSuffix = "";
             }
             newPerson.setSuffix(choiceSuffix);
 
-            System.out.print("Select a DOB (mm/dd/yyyy): ");
+            System.out.print("Enter a DOB (mm/dd/yyyy): ");
             String choiceDOB = input.next();
             if (choiceDOB.equals("-")) {
                 choiceDOB = "";
             }
             newPerson.setDob(choiceDOB);
 
-            System.out.print("Select a birth place: ");
+            System.out.print("Enter a birth place: ");
             String choiceBirthPlace = input.next();
             if (choiceBirthPlace.equals("-")) {
                 choiceBirthPlace = "";
             }
             newPerson.setBirthPlace(choiceBirthPlace);
 
-            System.out.print("Select a DOD (mm/dd/yyyy): ");
+            System.out.print("Enter a DOD (mm/dd/yyyy): ");
             String choiceDOD = input.next();
             if (choiceDOD.equals("-")) {
                 choiceDOD = "";
             }
             newPerson.setDod(choiceDOD);
 
-            System.out.print("Select a death place: ");
+            System.out.print("Enter a death place: ");
             String choiceDeathPlace = input.next();
             if (choiceDeathPlace.equals("-")) {
                 choiceDeathPlace = "";
             }
             newPerson.setDeathPlace(choiceDeathPlace);
 
+            System.out.println("\n...");
+            System.out.println("Result:");
+
             boolean stillAdding = true;
             do {
                 g.addVertex(newPerson); //THIS MAY NEED TO MOVE, it adds the new person to the graph
-                System.out.println("--------------------------------------------------------");
+                System.out.println("\n--------------------------------------------------------");
                 System.out.println(String.format("ID: %s", choiceID));
                 System.out.println(String.format("First name: %s", choiceFirstName));
                 System.out.println(String.format("Last name: %s", choiceLastName));
@@ -199,8 +191,11 @@ public class FamilyGraph {
                 System.out.println(String.format("Birth place: %s", choiceBirthPlace));
                 System.out.println(String.format("DOD: %s", choiceDOD));
                 System.out.println(String.format("Death place: %s", choiceDeathPlace));
-                //TODO: Have the relationships associated printed here, this can be nicked fron printGraph()
-                System.out.println("\t1. Add relationship \n\t2. Confirm addition \n\t3. Return to menu");
+                System.out.println("--------------------------------------------------------\n");
+
+                //TODO: Have the relationships associated printed here, this can be nicked from printGraph()
+                System.out.println("Select an option:");
+                System.out.println("\t1. Add relationship \n\t2. Confirm addition \n\t3. Return to main menu");
                 String choiceOption = input.next();
 
                 //TODO: Currently, confirm addition does the same thing as return to menu. Change that so that returning to menu
@@ -213,25 +208,29 @@ public class FamilyGraph {
                         String relationshipType;
                         do {
                             //I say this is a temp feature since we should prolly use the lookup being coded here
-                            System.out.println("Enter the ID of the related person (TEMP-FEATURE)");
+                            System.out.print("\nEnter the ID of the related person (TEMP-FEATURE): ");
                             relatedID = input.next();
 
 
-                            System.out.println(String.format("How is %s related to %s?", relatedID, choiceID));
+                            System.out.println(String.format("\nHow is %s related to %s?", relatedID, choiceID));
                             System.out.println("\t1. Parent of \n\t2. Child of \n\t3. Partner of");
-                            //TODO: Need to ask for start date, end date, and description
                             relationshipType = input.next();
 
                             //In this section I'm looking to see if this ID exists in our graph. The functionality if it isnt is further down
                             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
                             while (iterator.hasNext()) {
                                 Person person = iterator.next();
-                                if (person.getId().toString().equals(relatedID)) {
-                                    System.out.println(String.format("%s found", relatedID));
+                                if(person.getId().toString().equals(relatedID))
+                                {
+                                    System.out.println("\n...");
+                                    System.out.println(String.format("%s found.", relatedID));
                                     IDNotFound = false;
 
+                                    switch (relationshipType)
+                                    {
 
-                                    switch (relationshipType) {
+                                        // There is something weird going on with cases 1 and 2. Not sure if they are working as intended
+
                                         case "1": //The parent case, where the new person is the parent
                                             Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
@@ -248,40 +247,101 @@ public class FamilyGraph {
                                             g.addEdge(person, newPerson, childEdge);
                                             break;
                                         case "3": //The partner case, where the new person is a partner
-                                            boolean duplicateRelationship = false;
-                                            String relationshipID;
+                                            boolean duplicatePartnership = false;
+                                            String partnershipID;
                                             do {
-                                                System.out.print("Enter a unique relationship ID: ");
-                                                relationshipID = input.next();
+                                                duplicatePartnership = false; // Prevents infinite loop
 
-                                                //This is how we iterrate through all existing edges in our graph, looking for duplicate relationship ID
+                                                System.out.print("\nEnter a unique partnership ID: ");
+                                                partnershipID = input.next();
+
+                                                //This is how we iterate through all existing edges in our graph, looking for duplicate relationship ID
                                                 Set<RelationshipEdge> edges = g.edgeSet().stream().collect(Collectors.toSet());
                                                 for (RelationshipEdge edge : edges) {
                                                     String currentEdgeID = edge.getLabel().getId();
-                                                    if (relationshipID == currentEdgeID) {
 
-                                                        duplicateRelationship = true;
-                                                        System.out.println("Duplicate relationship ID found, choose another");
+                                                     if(partnershipID.equals(currentEdgeID))
+                                                    {
+                                                        duplicatePartnership = true;
+                                                        System.out.println("\nDuplicate partnership ID found. Please enter another.");
                                                     }
                                                 }
-                                            } while (duplicateRelationship);
-                                            Relationship partner = new Relationship(relationshipID);
+                                            } while(duplicatePartnership);
+
+                                            // This is where partnership info is asked
+                                            Relationship partner = new Relationship(partnershipID);
+
+                                            System.out.println("\n...");
+                                            System.out.println("Partnership ID accepted.");
+                                            System.out.println("\nFor ANY selection, enter '-' to leave blank.\n");
+
+                                            System.out.print("Set the partnership start date (mm/dd/yyyy): ");
+                                            String choiceStartDate = input.next();
+
+                                            if(choiceStartDate.equals("-"))
+                                            {
+                                                choiceStartDate = "";
+                                            }
+
+                                            partner.setStartDate(choiceStartDate);
+
+                                            System.out.print("Set the partnership end date (mm/dd/yyyy): ");
+                                            String choiceEndDate = input.next();
+
+                                            if(choiceEndDate.equals("-"))
+                                            {
+                                                choiceStartDate = "";
+                                            }
+
+                                            partner.setEndDate(choiceEndDate);
+
+                                            System.out.print("Set a description for the partnership: ");
+                                            String choiceDescription = input.next();
+
+                                            if(choiceDescription.equals("-"))
+                                            {
+                                                choiceStartDate = "";
+                                            }
+
+                                            partner.setDescription(choiceDescription);
                                             partner.setMaleParent(newPerson);
                                             partner.setFemaleParent(person);
                                             RelationshipEdge partnerEdge = new RelationshipEdge(partner);
                                             g.addEdge(newPerson, person, partnerEdge);
+
+
+                                            // Container to print newly added partnership info
+                                            System.out.println("\n...");
+                                            System.out.println("Result:");
+                                            System.out.println("\n--------------------------------------------------------");
+                                            System.out.println("Partnership ID: " + partnershipID);
+                                            System.out.println("Partnership start date: " + choiceStartDate);
+                                            System.out.println("Partnership end date: " + choiceEndDate);
+                                            System.out.println("Partnership description: " + choiceDescription);
+                                            System.out.println("--------------------------------------------------------\n");
+
+                                            System.out.println("Returning to new person entry.");
+                                            System.out.println("...");
+
                                             break;
                                     }
                                 }
                             }
+
                             if (IDNotFound) {
-                                System.out.println("ID not found, would you like to search again or return to person creation? \n\t1. Look for different ID \n\t2. Return to creation");
+                                
                                 //TODO: Add a third option to create a new person with the searched ID
+
+                                System.out.println("\nID not found. Would you like to search again or return to person creation? \n\t1. Look for different ID \n\t2. Create a new person with searched ID \n\t3. Return to creation");
+
                                 String keepTrying = input.next();
                                 switch (keepTrying) {
                                     case "1":
                                         break;
                                     case "2":
+                                        addPeople(g); // Works just fine, just requires the searched ID to be re-entered when it asks for a unique ID (searched ID isn't automatically added)
+                                        break;
+                                    case "3":
                                         IDNotFound = false;
                                         break;
                                 }
@@ -290,20 +350,100 @@ public class FamilyGraph {
 
                         break;
                     case "2":
-                        //TODO: Add the functionality here
-                        break;
-                    case "3":
+                        // Saves any additions and changes loaded graph
                         stillAdding = false;
                         continueChoice = false;
+
+                        break;
+                    case "3":
+                        // TODO: Exit without saving any additions
+                        // This will require work in main()
+
                         break;
                 }
-            } while (stillAdding);
-        } while (continueChoice);
+              }
+            } while(IDNotFound);
+
+                        break;
+                    case "2":
+                        // Saves any additions and changes loaded graph
+                        stillAdding = false;
+                        continueChoice = false;
+
+                        break;
+                    case "3":
+                        // TODO: Exit without saving any additions
+                        // This will require work in main()
+
+                        break;
+                }
+            }
+            while (stillAdding);
+        }
+        while (continueChoice);
 
         return g;
+
     }
 
-    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName, String lastName) {
+
+   public static String checkIfDuplicateID(String ID, DefaultUndirectedGraph<Person, RelationshipEdge> graph)
+    {
+        Scanner input = new Scanner(System.in);
+        boolean duplicateID;
+
+        do
+        {
+            duplicateID = false; // Prevents infinite loop
+
+            System.out.print("\nEnter a unique ID (required): ");
+            ID = input.next();
+
+            if (ID.equalsIgnoreCase("Child"))
+            {
+                System.out.println("\nYou cannot enter that as an ID. Please enter another.");
+                duplicateID = true;
+            }
+
+            else if (ID.equalsIgnoreCase("Parent"))
+            {
+                System.out.println("\nYou cannot enter that as an ID. Please enter another.");
+                duplicateID = true;
+            }
+
+            else if (ID.equalsIgnoreCase("Partner"))
+            {
+                System.out.println("\nYou cannot enter that as an ID. Please enter another.");
+                duplicateID = true;
+            }
+
+            else
+            {
+                //This is how you iterate through all the existing vertexes in our graph, looking to see if the chosen ID is a duplicate
+                GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(graph);
+                while (iterator.hasNext())
+                {
+                    Person person = iterator.next();
+                    // Not sure if these still need to be here
+                    // System.out.println(String.format("]%s[", person.getId()));
+                    // System.out.println(String.format("]%s[", choiceID));
+                    if (person.getId().equals(ID))
+                    {
+                        System.out.println("\nDuplicate ID found. Please enter another.");
+
+                        duplicateID = true;
+                    }
+                }
+            }
+        }
+        while (duplicateID);
+
+        return ID;
+    }
+
+    public static void exploreGraph(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName, String lastName)
+    {
+
         Person start1 = g.vertexSet().stream().filter(uri -> uri.getFirstName().equals(firstName)).findAny().get();
         Iterator<Person> iterator = new DepthFirstIterator<>(g, start1);
         System.out.println("People with the first name: " + firstName + ", and last name of: " + lastName);
