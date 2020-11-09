@@ -27,8 +27,7 @@ public class FamilyGraph {
 
             String choice = input.next();
 
-            switch (choice)
-            {
+            switch (choice){
                 case "1":
                     if(g!=null) {
                         System.out.println("--------------------------------------------------------------");
