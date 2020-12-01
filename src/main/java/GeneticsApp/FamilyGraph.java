@@ -3,13 +3,15 @@ package GeneticsApp;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class FamilyGraph {
 
     //Currently main gets the three parsed sections of the input file then uses them to build a graph
     //and print it
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
 
@@ -238,7 +240,7 @@ public class FamilyGraph {
                                     // This is where partnership info is asked
                                     // Container to print newly added partnership info
                                     switch (relationshipType) {
-//The parent case, where the new person is the parent
+                                        //The parent case, where the new person is the parent
                                         case "1" -> {
                                             Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
@@ -420,6 +422,7 @@ public class FamilyGraph {
         }
 
     }
+
     public static void exploreGraphFirst(DefaultUndirectedGraph<Person, RelationshipEdge> g, String firstName)
     {
 
@@ -433,6 +436,7 @@ public class FamilyGraph {
             }
         }
     }
+
     public static void exploreGraphLast(DefaultUndirectedGraph<Person, RelationshipEdge> g, String lastName)
     {
         Person start = g.vertexSet().stream().filter(uri -> uri.getLastName().equals(lastName)).findAny().get();
@@ -446,7 +450,8 @@ public class FamilyGraph {
         }
     }
 
-    public static void printNode(Person p){
+    public static void printNode(Person p)
+    {
         System.out.println("ID: " + p.getId());
         System.out.println(p.getFirstName()+ " " + p.getLastName());
         System.out.println("suffix: " + p.getSuffix());
@@ -456,9 +461,43 @@ public class FamilyGraph {
         System.out.println("----------------");
     }
 
-    public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g)
-    {
-        //TODO: Export graph to a CSV. Not a big concern
+    public static void outputFile(DefaultUndirectedGraph<Person, RelationshipEdge> g) throws IOException {
+        FileWriter writer = new FileWriter("output.txt");
+        writer.write("Person,,,,,,,,\n");
+
+        GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<Person, RelationshipEdge>(g);
+        while (iterator.hasNext())
+        {
+            Person man = iterator.next();
+
+            String id = man.getId();
+            String lastName = man.getLastName();
+            String firstName = man.getFirstName();
+            String suffix = man.getSuffix();
+            String dob = man.getDob();
+            String birthPlace = man.getBirthPlace();
+            String dod = man.getDod();
+            String deathPlace = man.getDeathPlace();
+            String parent_relationship = man.getParents();
+
+            if(!id.equals("Unknown Person"))
+            {
+                if(lastName == null){lastName = "";}
+                if(firstName == null){firstName = "";}
+                if(suffix == null){suffix = "";}
+                if(dob == null){dob = "";}
+                if(birthPlace == null){birthPlace = "";}
+                if(dod == null){dod = "";}
+                if(deathPlace == null){deathPlace = "";}
+                if(parent_relationship == null){parent_relationship = "";}
+                writer.write(id + "," + lastName + "," + firstName + "," + suffix + "," + dob + "," + birthPlace + "," + dod + "," + deathPlace + "," + parent_relationship + "\n");
+            }
+        }
+
+        writer.write(",,,,,,,,\n,,,,,,,,\nPartnership,,,,,,,,\n");
+
+        writer.close();
+
     }
 
     //Prints each vertex, it's name, and all its relationships
@@ -541,7 +580,8 @@ public class FamilyGraph {
         }
     }
 
-    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList) {
+    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList)
+    {
         DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
 
         //This first section iterates through the list of People we need to create and sets a Person
@@ -621,7 +661,7 @@ public class FamilyGraph {
             //the graph
             r.setMaleParent(male);
             r.setFemaleParent(female);
-            r.setDescription((String) relationshipData.get("Description"));
+            r.setDescription((String) relationshipData.get("Location"));
             r.setEndDate((String) relationshipData.get("EndDate"));
             r.setStartDate((String) relationshipData.get("StartDate"));
 
