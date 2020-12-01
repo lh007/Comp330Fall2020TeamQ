@@ -495,9 +495,63 @@ public class FamilyGraph {
         }
 
         writer.write(",,,,,,,,\n,,,,,,,,\nPartnership,,,,,,,,\n");
+        Set<RelationshipEdge> edges = new HashSet<>(g.edgeSet());
+        for (RelationshipEdge edge : edges)
+        {
+            String[] list = edge.getLabel().getId().split("-");
+            if(list[0].charAt(0) == 'R')
+            {
+                String rID = edge.getLabel().getId();
+                String firstPerson = edge.getLabel().getFemaleParent().getId();
+                String secondPerson = edge.getLabel().getMaleParent().getId();
+                String startDate = edge.getLabel().getStartDate();
+                String endDate = edge.getLabel().getEndDate();
+                String location = edge.getLabel().getDescription();
+
+                if(firstPerson == null || firstPerson.equals("Unknown Person")){firstPerson = "";}
+                if(secondPerson == null || secondPerson.equals("Unknown Person")){secondPerson = "";}
+                if(startDate == null){startDate = "";}
+                if(endDate == null){endDate = "";}
+                if(location == null){location = "";}
+                writer.write(rID + "," + firstPerson + "," + secondPerson + "," + startDate + "," + endDate + "," +location + ",,,\n");
+            }
+        }
+        writer.write(",,,,,,,,\n,,,,,,,,\nChildren,,,,,,,,\n");
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        GraphIterator<Person, RelationshipEdge> iterator2 = new BreadthFirstIterator<Person, RelationshipEdge>(g);
+        while (iterator2.hasNext())
+        {
+            Person man = iterator2.next();
+            Set<RelationshipEdge> relationships = g.edgesOf(man);
+            for(RelationshipEdge connection : relationships)
+            {
+                String[] list = connection.getLabel().getId().split("-");
+                if (list[0].equals("Child"))
+                {
+                    if(list[1].equals(man.getId()))
+                    {
+                        if(map.containsKey(man.getId()))
+                        {
+                            String prevParent = map.get(man.getId());
+                            map.replace(man.getId(), prevParent + "," + connection.getLabel().getMaleParent().getId());
+
+                        }
+                        else
+                        {
+                            map.put(man.getId(), connection.getLabel().getMaleParent().getId());
+                        }
+                    }
+                }
+
+            }
+        }
+        for (Map.Entry<String,String> entry : map.entrySet())
+        {
+            System.out.print(entry.getKey() + " - "+ entry.getValue() + "\n");
+        }
 
         writer.close();
-
     }
 
     //Prints each vertex, it's name, and all its relationships
@@ -566,6 +620,7 @@ public class FamilyGraph {
                         relatedOutput.append(String.format("\tGrandparent of %s\n", connectedTo));
                     }
                 }
+
                 else if(list[0].charAt(0) == 'R') {
                     if(!connection.getLabel().getId().equals(connectedTo)) {
                         relatedOutput.append(String.format("\tIn relationship %s to %s\n", connection.getLabel().getId(), connectedTo));
