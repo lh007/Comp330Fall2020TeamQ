@@ -548,7 +548,35 @@ public class FamilyGraph {
         }
         for (Map.Entry<String,String> entry : map.entrySet())
         {
-            System.out.print(entry.getKey() + " - "+ entry.getValue() + "\n");
+            //System.out.print(entry.getKey() + " - "+ entry.getValue() + "\n");
+            String[] parents = entry.getValue().split(",");
+            String childID = entry.getKey();
+            Boolean found = false;
+            GraphIterator<Person, RelationshipEdge> iterator3 = new BreadthFirstIterator<Person, RelationshipEdge>(g);
+            while (iterator3.hasNext() && !found)
+            {
+                Person man = iterator3.next();
+                if(man.getId().equals(parents[0]))
+                {
+
+                    Set<RelationshipEdge> relationships = g.edgesOf(man);
+                    for(RelationshipEdge connection : relationships)
+                    {
+                        String[] list = connection.getLabel().getId().split("-");
+                        if(list[0].charAt(0) == 'R')
+                        {
+                            if((connection.getLabel().getMaleParent().getId().equals(parents[0]) && connection.getLabel().getFemaleParent().getId().equals(parents[1])) || (connection.getLabel().getMaleParent().getId().equals(parents[1]) && connection.getLabel().getFemaleParent().getId().equals(parents[0])))
+                            {
+                                writer.write(connection.getLabel().getId() + "," + childID + ",,,,,,,\n");
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+
         }
 
         writer.close();
