@@ -35,24 +35,25 @@ public class FamilyGraph {
                         String exploreChoice = input.next();
 
                         switch (exploreChoice) {
-                            case "1" -> {
+                            case "1":
                                 System.out.println("type the first name");
                                 String firstName = input.next();
                                 System.out.println("type the last name");
                                 String lastName = input.next();
                                 exploreGraph(g, firstName, lastName);
-                            }
-                            case "2" -> {
+                            break;
+                            case "2":
                                 System.out.println("type the first name");
                                 String firstNameOnly = input.next();
                                 exploreGraphFirst(g, firstNameOnly);
-                            }
-                            case "3" -> {
+                            break;
+                            case "3":
                                 System.out.println("type the last name");
                                 String lastNameOnly = input.next();
                                 exploreGraphLast(g, lastNameOnly);
-                            }
-                            default -> System.out.println("Error, not a valid choice");
+                            break;
+                            default:
+                                System.out.println("Error, not a valid choice");
                         }
                     }
                     else
@@ -241,23 +242,23 @@ public class FamilyGraph {
                                     // Container to print newly added partnership info
                                     switch (relationshipType) {
                                         //The parent case, where the new person is the parent
-                                        case "1" -> {
+                                        case "1":
                                             Relationship parent = new Relationship(String.format("Child-%s", relatedID));
                                             parent.setMaleParent(newPerson);
                                             parent.setFemaleParent(person);
                                             RelationshipEdge parentEdge = new RelationshipEdge(parent);
                                             g.addEdge(newPerson, person, parentEdge);
-                                        }
+                                        break;
                                         //The child case, where the new person is the child
-                                        case "2" -> {
+                                        case "2":
                                             Relationship child = new Relationship(String.format("Child-%s", choiceID));
                                             child.setMaleParent(person);
                                             child.setFemaleParent(newPerson);
                                             RelationshipEdge childEdge = new RelationshipEdge(child);
                                             g.addEdge(person, newPerson, childEdge);
-                                        }
+                                        break;
                                         //The partner case, where the new person is a partner
-                                        case "3" -> {
+                                        case "3":
                                             boolean duplicatePartnership;
                                             String partnershipID;
                                             do {
@@ -312,7 +313,7 @@ public class FamilyGraph {
                                             System.out.println("--------------------------------------------------------\n");
                                             System.out.println("Returning to new person entry.");
                                             System.out.println("...");
-                                        }
+                                        break;
                                     }
                                 }
                             }
