@@ -12,6 +12,7 @@ public class ParseFile {
     ArrayList<Hashtable<String,String>> parsedPerson = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedRelationship = new ArrayList<>();
     ArrayList<Hashtable<String,String>> parsedChild = new ArrayList<>();
+    List<String> data;
 
     public ParseFile(String fileName){
         file = fileName + ".txt";
@@ -28,7 +29,7 @@ public class ParseFile {
     public void readAndParse() {
         try{
 
-            List<String> data = Files.readAllLines(Paths.get(file));
+            data = Files.readAllLines(Paths.get(file));
             int swap = 0;
             for (String datum : data) {
                 Hashtable<String, String> lineHash = new Hashtable<>();
@@ -97,6 +98,8 @@ public class ParseFile {
     public ArrayList<Hashtable<String,String>> getParsedChild(){
         return this.parsedChild;
     }
+
+    public List<String> getData(){return this.data;}
 
 
 } 
