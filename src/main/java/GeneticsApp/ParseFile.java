@@ -35,10 +35,18 @@ public class ParseFile {
                 String[] lineSplit = datum.split(",", -1);
 
                 switch (lineSplit[0]) {
-                    case "Person" -> swap = 1;
-                    case "Partnership" -> swap = 2;
-                    case "Children" -> swap = 3;
-                    case "" -> swap = 0;
+                    case "Person":
+                         swap = 1;
+                     break;
+                    case "Partnership":
+                        swap = 2;
+                     break;
+                    case "Children":
+                        swap = 3;
+                     break;
+                    case "":
+                        swap = 0;
+                     break;
                 }
 
                 if (swap == 1 && !lineSplit[0].equals("Person")) {
