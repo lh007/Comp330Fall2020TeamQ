@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.AppTest" time="0.023" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.ParseFileTest" time="0.028" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -57,5 +57,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="GeneticsApp.AppTest" time="0.002"/>
+  <testcase name="parseFullPerson" classname="GeneticsApp.ParseFileTest" time="0.015"/>
+  <testcase name="parseChild" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="readFile" classname="GeneticsApp.ParseFileTest" time="0.002"/>
+  <testcase name="parseMoreEmptyPerson" classname="GeneticsApp.ParseFileTest" time="0.002"/>
+  <testcase name="parsePartialPerson" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="parsePartialRelationship" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="readFileLines" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="parseRelationship" classname="GeneticsApp.ParseFileTest" time="0.001"/>
 </testsuite>

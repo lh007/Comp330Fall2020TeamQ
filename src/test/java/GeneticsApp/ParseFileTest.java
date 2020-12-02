@@ -4,14 +4,42 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Unit test for ParseFile class.
  */
 public class ParseFileTest
 {
+
+    @Test
+    public void readFileLines(){
+        String testFileName = "test";
+        ParseFile parser = new ParseFile(testFileName);
+        List<String> testData = parser.getData();
+
+        assertEquals(58, testData.size());
+    }
+
+    @Test
+    public void readFile(){
+        String testFileName = "test.txt";
+        String testFileName2 = "test";
+        ParseFile parser = new ParseFile(testFileName2);
+        List<String> testData = parser.getData();
+
+        try {
+            List<String> data = Files.readAllLines(Paths.get(testFileName));
+            assertEquals(data, testData);
+        }
+        catch(Exception e){
+            fail("test failed: " + e);
+        }
+    }
 
     @Test
     public void parseFullPerson(){
@@ -125,5 +153,7 @@ public class ParseFileTest
         //R1,P1,,,,,,,
         assertEquals(expected.get(0),childList.get(0));
     }
+
+
 
 }
