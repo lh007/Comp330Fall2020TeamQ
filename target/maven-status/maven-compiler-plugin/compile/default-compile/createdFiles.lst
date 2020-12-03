@@ -1,5 +1,5 @@
-GeneticsApp/FamilyGraph.class
-GeneticsApp/RelationshipEdge.class
-GeneticsApp/Relationship.class
-GeneticsApp/Person.class
-GeneticsApp/ParseFile.class
+GeneticsApp\RelationshipEdge.class
+GeneticsApp\Relationship.class
+GeneticsApp\ParseFile.class
+GeneticsApp\Person.class
+GeneticsApp\FamilyGraph.class
