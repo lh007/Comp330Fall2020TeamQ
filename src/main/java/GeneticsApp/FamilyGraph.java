@@ -11,7 +11,8 @@ public class FamilyGraph {
 
     //Currently main gets the three parsed sections of the input file then uses them to build a graph
     //and print it
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException
+    {
 
         DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
 
@@ -664,12 +665,8 @@ public class FamilyGraph {
         }
     }
 
-    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList)
+    public static DefaultUndirectedGraph createPeople(ArrayList<Hashtable<String, String>> people, DefaultUndirectedGraph<Person, RelationshipEdge> g)
     {
-        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
-
-        //This first section iterates through the list of People we need to create and sets a Person
-        //object with all the correct data for that person
         int i;
         for (i = 0; i < people.size(); i++) {
             Hashtable personData = people.get(i);
@@ -690,9 +687,12 @@ public class FamilyGraph {
             //Add this person as a vertex on the graph
             g.addVertex(person);
         }
+        return g;
+    }
 
-
-        //This section iterates through the imported relationships
+    public static DefaultUndirectedGraph createRelationship(ArrayList<Hashtable<String, String>> relationships, DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
+        int i;
         for (i = 0; i < relationships.size(); i++) {
             Hashtable relationshipData = relationships.get(i);
             String id = (String) relationshipData.get("Key");
@@ -753,11 +753,12 @@ public class FamilyGraph {
             RelationshipEdge edge = new RelationshipEdge(r);
             g.addEdge(male, female, edge);
         }
+        return g;
+    }
 
-        //Iterates through all the edges with the intention of setting parent relationships using
-        //parentList
+    public static DefaultUndirectedGraph createParents(ArrayList<Hashtable<String, String>> parentList, DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
         Set<RelationshipEdge> edges = new HashSet<>(g.edgeSet());
-
 
         for (int index = 0; index < parentList.size(); index++) {
             GraphIterator<Person, RelationshipEdge> iterator = new BreadthFirstIterator<>(g);
@@ -814,64 +815,78 @@ public class FamilyGraph {
 
                             }
 
-                    if ( grandpa1.getId() != null  && !grandpa1.getId().equals("Unknown Person") && !man.getId().equals(grandpa1.getId())) {
+                            if ( grandpa1.getId() != null  && !grandpa1.getId().equals("Unknown Person") && !man.getId().equals(grandpa1.getId())) {
 
                                 Relationship grandmaRelationship1 = new Relationship(String.format("Grandparent Are-%s",man.getId()));
                                 grandmaRelationship1.setMaleParent(grandpa1);
-                               grandmaRelationship1.setFemaleParent(man);
+                                grandmaRelationship1.setFemaleParent(man);
                                 RelationshipEdge grandparentRelation1 = new RelationshipEdge(grandmaRelationship1);
                                 g.addEdge(man, grandpa1, grandparentRelation1);
                             }
 
 
-                    if (grandma1.getId() != null && grandma1.getId() != null  && !grandma1.getId().equals("Unknown Person") && !man.getId().equals(grandma1.getId())) {
+                            if (grandma1.getId() != null && grandma1.getId() != null  && !grandma1.getId().equals("Unknown Person") && !man.getId().equals(grandma1.getId())) {
 
-                        Relationship grandmaRelationship2 = new Relationship(String.format("Grandparent-%s", man.getId()));
-                        grandmaRelationship2.setMaleParent(grandma1);
-                       grandmaRelationship2.setFemaleParent(man);
-                        RelationshipEdge grandparentRelation2 = new RelationshipEdge(grandmaRelationship2);
-                        g.addEdge(man, grandma1, grandparentRelation2);
-                    }
-                    if (grandpa2.getId() != null && grandpa2.getId() != null  && !grandpa2.getId().equals("Unknown Person") && !man.getId().equals(grandpa2.getId())) {
+                                Relationship grandmaRelationship2 = new Relationship(String.format("Grandparent-%s", man.getId()));
+                                grandmaRelationship2.setMaleParent(grandma1);
+                                grandmaRelationship2.setFemaleParent(man);
+                                RelationshipEdge grandparentRelation2 = new RelationshipEdge(grandmaRelationship2);
+                                g.addEdge(man, grandma1, grandparentRelation2);
+                            }
+                            if (grandpa2.getId() != null && grandpa2.getId() != null  && !grandpa2.getId().equals("Unknown Person") && !man.getId().equals(grandpa2.getId())) {
 
-                        Relationship grandmaRelationship3 = new Relationship(String.format("Grandparent-%s", man.getId()));
-                        grandmaRelationship3.setMaleParent(grandpa2);
-                        grandmaRelationship3.setFemaleParent(man);
-                        RelationshipEdge grandparentRelation3 = new RelationshipEdge(grandmaRelationship3);
-                        g.addEdge(man, grandpa2, grandparentRelation3);
-                    }
-                    if (grandma2.getId() != null && grandma2.getId() != null  && !grandma2.getId().equals("Unknown Person") && !man.getId().equals(grandma2.getId())) {
+                                Relationship grandmaRelationship3 = new Relationship(String.format("Grandparent-%s", man.getId()));
+                                grandmaRelationship3.setMaleParent(grandpa2);
+                                grandmaRelationship3.setFemaleParent(man);
+                                RelationshipEdge grandparentRelation3 = new RelationshipEdge(grandmaRelationship3);
+                                g.addEdge(man, grandpa2, grandparentRelation3);
+                            }
+                            if (grandma2.getId() != null && grandma2.getId() != null  && !grandma2.getId().equals("Unknown Person") && !man.getId().equals(grandma2.getId())) {
 
-                        Relationship grandmaRelationship4 = new Relationship(String.format("Grandparent-%s", man.getId()));
-                        grandmaRelationship4.setMaleParent(grandma2);
-                        grandmaRelationship4.setFemaleParent(man);
-                        RelationshipEdge grandparentRelation4 = new RelationshipEdge(grandmaRelationship4);
-                        g.addEdge(man, grandma2, grandparentRelation4);
-                    }
+                                Relationship grandmaRelationship4 = new Relationship(String.format("Grandparent-%s", man.getId()));
+                                grandmaRelationship4.setMaleParent(grandma2);
+                                grandmaRelationship4.setFemaleParent(man);
+                                RelationshipEdge grandparentRelation4 = new RelationshipEdge(grandmaRelationship4);
+                                g.addEdge(man, grandma2, grandparentRelation4);
+                            }
 
-                    Relationship maleRelationship = new Relationship(String.format("Child-%s", man.getId()));
-                    maleRelationship.setMaleParent(maleParent);
-                    maleRelationship.setFemaleParent(man);
-                    RelationshipEdge maleEdge = new RelationshipEdge(maleRelationship);
-                    g.addEdge(man, maleParent, maleEdge);
+                            Relationship maleRelationship = new Relationship(String.format("Child-%s", man.getId()));
+                            maleRelationship.setMaleParent(maleParent);
+                            maleRelationship.setFemaleParent(man);
+                            RelationshipEdge maleEdge = new RelationshipEdge(maleRelationship);
+                            g.addEdge(man, maleParent, maleEdge);
 
-                    Relationship femaleRelationship = new Relationship(String.format("Child-%s", man.getId()));
-                    femaleRelationship.setMaleParent(femaleParent);
-                    femaleRelationship.setFemaleParent(man);
-                    RelationshipEdge femaleEdge = new RelationshipEdge(femaleRelationship);
-                    g.addEdge(man, femaleParent, femaleEdge);
-
-
-
-
+                            Relationship femaleRelationship = new Relationship(String.format("Child-%s", man.getId()));
+                            femaleRelationship.setMaleParent(femaleParent);
+                            femaleRelationship.setFemaleParent(man);
+                            RelationshipEdge femaleEdge = new RelationshipEdge(femaleRelationship);
+                            g.addEdge(man, femaleParent, femaleEdge);
                         }
                     }
                 }
             }
 
         }
+        return g;
+    }
 
-            return g;
+    public static DefaultUndirectedGraph createGraph(ArrayList<Hashtable<String, String>> people, ArrayList<Hashtable<String, String>> relationships, ArrayList<Hashtable<String, String>> parentList)
+    {
+        DefaultUndirectedGraph<Person, RelationshipEdge> g = new DefaultUndirectedGraph<>(RelationshipEdge.class);
+
+        //This first section iterates through the list of People we need to create and sets a Person
+        //object with all the correct data for that person
+
+        g = createPeople(people, g);
+
+        //This section iterates through the imported relationships
+        g = createRelationship(relationships, g);
+
+        //Iterates through all the edges with the intention of setting parent relationships using
+        //parentList
+        g = createParents(parentList, g);
+
+        return g;
 
         }
     }
