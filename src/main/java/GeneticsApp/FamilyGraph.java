@@ -356,6 +356,25 @@ public class FamilyGraph {
         return g;
     }
 
+    // New function to make writing tests for 'AddPersonTest.java' easier
+    public static DefaultUndirectedGraph addPerson(String ID, String firstName, String lastName, String suffix, String DOB, String DOD, String birthPlace, String deathPlace, DefaultUndirectedGraph<Person, RelationshipEdge> g)
+    {
+        Person newPerson = new Person();
+
+        newPerson.setId(ID);
+        newPerson.setFirstName(firstName);
+        newPerson.setLastName(lastName);
+        newPerson.setSuffix(suffix);
+        newPerson.setDob(DOB);
+        newPerson.setDod(DOD);
+        newPerson.setBirthPlace(birthPlace);
+        newPerson.setDeathPlace(deathPlace);
+
+        g.addVertex(newPerson);
+
+        return g;
+    }
+
     // New function that checks if the ID entered by the user exists within the graph or not to avoid duplicates
     public static String checkIfDuplicateID(String ID, DefaultUndirectedGraph<Person, RelationshipEdge> graph)
     {
