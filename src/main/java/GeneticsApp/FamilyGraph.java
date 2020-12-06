@@ -836,7 +836,7 @@ public class FamilyGraph {
 
                             if ( grandpa1.getId() != null  && !grandpa1.getId().equals("Unknown Person") && !man.getId().equals(grandpa1.getId())) {
 
-                                Relationship grandmaRelationship1 = new Relationship(String.format("Grandparent Are-%s",man.getId()));
+                                Relationship grandmaRelationship1 = new Relationship(String.format("Grandparent-%s",man.getId()));
                                 grandmaRelationship1.setMaleParent(grandpa1);
                                 grandmaRelationship1.setFemaleParent(man);
                                 RelationshipEdge grandparentRelation1 = new RelationshipEdge(grandmaRelationship1);
