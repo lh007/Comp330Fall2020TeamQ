@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.AppTest" time="0.078" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.PersonTest" time="0.032" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -57,11 +57,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="checkRelationshipEdges" classname="GeneticsApp.AppTest" time="0.008"/>
-  <testcase name="numberOfParents" classname="GeneticsApp.AppTest" time="0.008"/>
-  <testcase name="checkParentEdge" classname="GeneticsApp.AppTest" time="0.005"/>
-  <testcase name="checkRelationshipInfo" classname="GeneticsApp.AppTest" time="0.001"/>
-  <testcase name="numberOfRelationships" classname="GeneticsApp.AppTest" time="0.001"/>
-  <testcase name="numberOfPeople" classname="GeneticsApp.AppTest" time="0"/>
-  <testcase name="checkPersonData" classname="GeneticsApp.AppTest" time="0"/>
+  <testcase name="testGrand10" classname="GeneticsApp.PersonTest" time="0.005"/>
+  <testcase name="testGrand20" classname="GeneticsApp.PersonTest" time="0.004"/>
+  <testcase name="TestGrandparents" classname="GeneticsApp.PersonTest" time="0.003"/>
+  <testcase name="testGrand2" classname="GeneticsApp.PersonTest" time="0.003"/>
+  <testcase name="testGrand6" classname="GeneticsApp.PersonTest" time="0.004"/>
+  <testcase name="testGrand7" classname="GeneticsApp.PersonTest" time="0.003"/>
+  <testcase name="testGrand8" classname="GeneticsApp.PersonTest" time="0.003"/>
+  <testcase name="testGrandparent19" classname="GeneticsApp.PersonTest" time="0.003"/>
 </testsuite>

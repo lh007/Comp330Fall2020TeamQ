@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.AppTest" time="0.078" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="GeneticsApp.AddPersonTest" time="0.003" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -57,11 +57,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="checkRelationshipEdges" classname="GeneticsApp.AppTest" time="0.008"/>
-  <testcase name="numberOfParents" classname="GeneticsApp.AppTest" time="0.008"/>
-  <testcase name="checkParentEdge" classname="GeneticsApp.AppTest" time="0.005"/>
-  <testcase name="checkRelationshipInfo" classname="GeneticsApp.AppTest" time="0.001"/>
-  <testcase name="numberOfRelationships" classname="GeneticsApp.AppTest" time="0.001"/>
-  <testcase name="numberOfPeople" classname="GeneticsApp.AppTest" time="0"/>
-  <testcase name="checkPersonData" classname="GeneticsApp.AppTest" time="0"/>
+  <testcase name="onlyAddDeathPlace" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddFullName" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddDOB" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddDOD" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddBirthPlace" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddID" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddLastName" classname="GeneticsApp.AddPersonTest" time="0"/>
+  <testcase name="onlyAddSuffix" classname="GeneticsApp.AddPersonTest" time="0.001"/>
+  <testcase name="onlyAddFirstName" classname="GeneticsApp.AddPersonTest" time="0"/>
 </testsuite>

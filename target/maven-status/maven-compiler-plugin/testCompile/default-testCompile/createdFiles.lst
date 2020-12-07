@@ -1,3 +1,5 @@
-GeneticsApp\AppTest.class
-GeneticsApp\menuTest.class
-GeneticsApp\ParseFileTest.class
+GeneticsApp/AppTest.class
+GeneticsApp/AddPersonTest.class
+GeneticsApp/menuTest.class
+GeneticsApp/ParseFileTest.class
+GeneticsApp/PersonTest.class
