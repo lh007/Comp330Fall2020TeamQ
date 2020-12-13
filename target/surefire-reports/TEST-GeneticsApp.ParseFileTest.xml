@@ -5,7 +5,7 @@
     <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value=""/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/blooopers/programming/GenealogyApp/target/test-classes:/home/blooopers/programming/GenealogyApp/target/classes:/home/blooopers/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/blooopers/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/blooopers/.m2/repository/org/jgrapht/jgrapht-core/1.5.0/jgrapht-core-1.5.0.jar:/home/blooopers/.m2/repository/org/jheaps/jheaps/0.13/jheaps-0.13.jar:"/>
+    <property name="java.class.path" value="/home/blooopers/programming/GenealogyApp/target/test-classes:/home/blooopers/programming/GenealogyApp/target/classes:/home/blooopers/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/blooopers/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/blooopers/.m2/repository/org/jgrapht/jgrapht-core/1.5.0/jgrapht-core-1.5.0.jar:/home/blooopers/.m2/repository/org/jheaps/jheaps/0.13/jheaps-0.13.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-controls/12.0.2/javafx-controls-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-controls/12.0.2/javafx-controls-12.0.2-linux.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-graphics/12.0.2/javafx-graphics-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-graphics/12.0.2/javafx-graphics-12.0.2-linux.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-base/12.0.2/javafx-base-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-base/12.0.2/javafx-base-12.0.2-linux.jar:"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://openjdk.java.net/"/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk/lib"/>
-    <property name="sun.java.command" value="/home/blooopers/programming/GenealogyApp/target/surefire/surefirebooter12819419265638909161.jar /home/blooopers/programming/GenealogyApp/target/surefire 2020-12-07T03-41-37_791-jvmRun1 surefire11183727532132104324tmp surefire_015749217016757255533tmp"/>
+    <property name="sun.java.command" value="/home/blooopers/programming/GenealogyApp/target/surefire/surefirebooter10344912370361828367.jar /home/blooopers/programming/GenealogyApp/target/surefire 2020-12-13T17-48-52_517-jvmRun1 surefire9633815393256619375tmp surefire_013368413496236127501tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/blooopers/programming/GenealogyApp/target/test-classes:/home/blooopers/programming/GenealogyApp/target/classes:/home/blooopers/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/blooopers/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/blooopers/.m2/repository/org/jgrapht/jgrapht-core/1.5.0/jgrapht-core-1.5.0.jar:/home/blooopers/.m2/repository/org/jheaps/jheaps/0.13/jheaps-0.13.jar:"/>
+    <property name="surefire.test.class.path" value="/home/blooopers/programming/GenealogyApp/target/test-classes:/home/blooopers/programming/GenealogyApp/target/classes:/home/blooopers/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/blooopers/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/blooopers/.m2/repository/org/jgrapht/jgrapht-core/1.5.0/jgrapht-core-1.5.0.jar:/home/blooopers/.m2/repository/org/jheaps/jheaps/0.13/jheaps-0.13.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-controls/12.0.2/javafx-controls-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-controls/12.0.2/javafx-controls-12.0.2-linux.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-graphics/12.0.2/javafx-graphics-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-graphics/12.0.2/javafx-graphics-12.0.2-linux.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-base/12.0.2/javafx-base-12.0.2.jar:/home/blooopers/.m2/repository/org/openjfx/javafx-base/12.0.2/javafx-base-12.0.2-linux.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/blooopers"/>
     <property name="user.language" value="en"/>
@@ -31,7 +31,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/blooopers/programming/GenealogyApp/target/surefire/surefirebooter12819419265638909161.jar"/>
+    <property name="surefire.real.class.path" value="/home/blooopers/programming/GenealogyApp/target/surefire/surefirebooter10344912370361828367.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.8+10"/>
     <property name="user.name" value="blooopers"/>
@@ -61,8 +61,8 @@
   <testcase name="parseChild" classname="GeneticsApp.ParseFileTest" time="0"/>
   <testcase name="readFile" classname="GeneticsApp.ParseFileTest" time="0"/>
   <testcase name="parseMoreEmptyPerson" classname="GeneticsApp.ParseFileTest" time="0"/>
-  <testcase name="parsePartialPerson" classname="GeneticsApp.ParseFileTest" time="0"/>
-  <testcase name="parsePartialRelationship" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="parsePartialPerson" classname="GeneticsApp.ParseFileTest" time="0.001"/>
+  <testcase name="parsePartialRelationship" classname="GeneticsApp.ParseFileTest" time="0"/>
   <testcase name="readFileLines" classname="GeneticsApp.ParseFileTest" time="0"/>
   <testcase name="parseRelationship" classname="GeneticsApp.ParseFileTest" time="0"/>
 </testsuite>

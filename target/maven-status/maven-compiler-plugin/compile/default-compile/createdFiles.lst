@@ -2,4 +2,5 @@ GeneticsApp/FamilyGraph.class
 GeneticsApp/RelationshipEdge.class
 GeneticsApp/Relationship.class
 GeneticsApp/Person.class
+GeneticsApp/Gui.class
 GeneticsApp/ParseFile.class

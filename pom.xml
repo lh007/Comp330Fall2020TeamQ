@@ -29,6 +29,11 @@
       <artifactId>jgrapht-core</artifactId>
       <version>1.5.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>12.0.2</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -72,6 +77,14 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>0.0.5</version>
+          <configuration>
+            <mainClass>HelloFX</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

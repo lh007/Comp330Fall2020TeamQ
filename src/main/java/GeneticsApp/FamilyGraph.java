@@ -1,5 +1,6 @@
 package GeneticsApp;
 
+import javafx.application.Application;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 import java.util.*;
@@ -13,6 +14,7 @@ public class FamilyGraph {
     //and print it
     public static void main(String[] args) throws IOException
     {
+        Application.launch(Gui.class,args);
 
         DefaultUndirectedGraph<Person, RelationshipEdge> g = null;
 
