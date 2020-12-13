@@ -2,6 +2,8 @@
 Previously a class project. It is now a personal project for the 4 working on it.
 
 This app takes in a file of people, children, and relationships and creates a family tree out of it.
+
+Built with Maven using openJDK 11 or 14 (depending on which of us merges to master)
 # Features
 -Uses jGrapht as the graph
 
