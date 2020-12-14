@@ -5,7 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 import java.awt.*;
 
@@ -16,6 +20,7 @@ public class Gui extends Application implements EventHandler<ActionEvent> {
     Button exploreGraphButton;
     Button addPerson;
     Button displayGraph;
+    Label label1;
 
 
     @Override
@@ -26,13 +31,17 @@ public class Gui extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("genealogy app!");
+        stage.setHeight(600);
+        stage.setWidth(700);
         importButton = new Button("Import File");
+        label1 = new Label("this is a test label");
+        //stage.initModality(Modality.APPLICATION_MODAL); this will make it so no other window can be used until this is closed. can use it for opening small search windows or a login window
+
+        VBox root = new VBox();
+        root.getChildren().addAll(label1, importButton);
+        Scene scene = new Scene(root);
 
 
-        StackPane startLayout = new StackPane();
-        //startLayout.getChildren().add(importButton);
-
-        Scene scene = new Scene(startLayout, 600,400);
         stage.setScene(scene);
         stage.show();
     }
