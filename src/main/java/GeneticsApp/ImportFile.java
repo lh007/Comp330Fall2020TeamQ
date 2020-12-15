@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,16 +18,29 @@ import javafx.scene.control.Button;
 
 public class ImportFile {
 
-    Label label1 = new Label("Click which option you want");
-
-    public static void display(){
+    public static void display(Font font){
         Stage stage = new Stage();
         stage.setTitle("genealogy app!");
         stage.setHeight(600);
         stage.setWidth(700);
+        stage.initModality(Modality.APPLICATION_MODAL);
 
+        TextField importFileName = new TextField("Type file name here");
+        SetStyle.setTextFieldStyle(font,importFileName);
+        Button closeButton = new Button("Enter");
+        SetStyle.setButtonStyle(font,closeButton);
+        closeButton.setOnAction(e -> stage.close());
 
+        VBox branch = new VBox(10);
+        branch.getChildren().addAll(importFileName,closeButton);
+
+        Scene scene = new Scene(branch);
+        stage.setScene(scene);
+        stage.showAndWait();
 
     }
+
+    //can probably put the import file method from familyGraph in here
+
 
 }

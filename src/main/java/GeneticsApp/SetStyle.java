@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,5 +29,9 @@ public class SetStyle {
     public static void setLabelStyle(Font font, Label label){
         label.setFont(font);
         label.setTextFill(Color.web("#3131b7"));
+    }
+
+    public static void setTextFieldStyle(Font font, TextField textField){
+        textField.setFont(font);
     }
 }

@@ -19,10 +19,13 @@ import java.awt.*;
 
 public class ButtonController {
 
+    Font font = new Font("Cambria", 25);
+
+
     public void handle(ActionEvent actionEvent) {
 
         if(actionEvent.getSource().toString().contains("Import File")){
-            System.out.println("import pressed");
+            ImportFile.display(font);
         }
         else if(actionEvent.getSource().toString().contains("Export File")){
             System.out.println("export pressed");
@@ -36,5 +39,6 @@ public class ButtonController {
         else if(actionEvent.getSource().toString().contains("Display Graph")){
             System.out.println("displayGraph pressed");
         }
+        //should have the enter button go here so I can call the import file method from family graph
     }
 }
