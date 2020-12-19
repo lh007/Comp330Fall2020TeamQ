@@ -23,12 +23,12 @@ public class ButtonController {
 
 
     public void handle(ActionEvent actionEvent) {
-
+        SubMenu menu = new SubMenu();
         if(actionEvent.getSource().toString().contains("Import File")){
-            ImportFile.display(font);
+            menu.displayImportFile(font);
         }
         else if(actionEvent.getSource().toString().contains("Export File")){
-            System.out.println("export pressed");
+            menu.displayExportFile(font);
         }
         else if(actionEvent.getSource().toString().contains("Explore Graph")){
             System.out.println("exploreGraphButton pressed");
@@ -37,7 +37,7 @@ public class ButtonController {
             System.out.println("addPerson pressed");
         }
         else if(actionEvent.getSource().toString().contains("Display Graph")){
-            System.out.println("displayGraph pressed");
+            menu.displayGraph(font);
         }
         //should have the enter button go here so I can call the import file method from family graph
     }
