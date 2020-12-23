@@ -21,7 +21,9 @@ public class SubMenu {
     Stage stage = new Stage();
     VBox branch = new VBox(10);
     TextField inputField = new TextField("field");
+    TextField inputField2 = new TextField("field");
     Button closeButton = new Button("enter");
+
 
     public void displayImportFile(Font font){ //instead of void have it return the textfield string
         stage.setTitle("Import file");
@@ -80,6 +82,32 @@ public class SubMenu {
         Scene scene = new Scene(branch);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    public void displayExplore(Font font){
+        stage.setTitle("Explore Graph!");
+        stage.setHeight(900);
+        stage.setWidth(800);
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+        inputField.setText("Type first name here");
+        inputField2.setText("Type last name here");
+        SetStyle.setTextFieldStyle(font,inputField);
+        SetStyle.setTextFieldStyle(font,inputField2);
+
+        closeButton.setText("Press to search. fields can be empty");
+        SetStyle.setButtonStyle(font,closeButton);
+        closeButton.setOnAction(e -> stage.close());//TODO something with exploring graph
+
+        branch.getChildren().addAll(inputField,inputField2,closeButton);
+        Scene scene = new Scene(branch);
+        stage.setScene(scene);
+        stage.showAndWait();
+
+    }
+
+    public void displayAddPerson(Font font){
+
     }
 
     //can probably put the import file method from familyGraph in here
