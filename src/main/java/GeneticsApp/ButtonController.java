@@ -31,10 +31,10 @@ public class ButtonController {
             menu.displayExportFile(font);
         }
         else if(actionEvent.getSource().toString().contains("Explore Graph")){
-            System.out.println("exploreGraphButton pressed");
+            menu.displayExplore(font);
         }
         else if(actionEvent.getSource().toString().contains("Add Person")){
-            System.out.println("addPerson pressed");
+            menu.displayAddPerson(font);
         }
         else if(actionEvent.getSource().toString().contains("Display Graph")){
             menu.displayGraph(font);
