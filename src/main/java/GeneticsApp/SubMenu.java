@@ -18,6 +18,8 @@ import javafx.scene.control.Button;
 
 public class SubMenu { //TODO add a constructor for creating window (cut down on code) look at old projects for example
 
+    ButtonController controller = new ButtonController();
+
     Stage stage = new Stage();
     VBox branch = new VBox(10);
     TextField inputField = new TextField("field");
@@ -40,9 +42,15 @@ public class SubMenu { //TODO add a constructor for creating window (cut down on
         inputField.setText("Type file name here");
         SetStyle.setTextFieldStyle(font,inputField);
 
-        closeButton.setText("Enter");
+        closeButton.setText("Press to Import");
         SetStyle.setButtonStyle(font,closeButton);
-        closeButton.setOnAction(e -> stage.close());//TODO something with the textfield when closing
+        closeButton.setOnAction(e -> {
+            System.out.println(inputField.getText());
+            stage.close();
+            closeWindow();
+
+        });
+        //TODO something with the textfield when closing
 
         branch.getChildren().addAll(inputField,closeButton);
 
@@ -61,7 +69,7 @@ public class SubMenu { //TODO add a constructor for creating window (cut down on
         inputField.setText("Type name of export file here");
         SetStyle.setTextFieldStyle(font,inputField);
 
-        closeButton.setText("Enter");
+        closeButton.setText("Press to Export");
         SetStyle.setButtonStyle(font,closeButton);
         closeButton.setOnAction(e -> stage.close());//TODO something with the textfield when closing
 
@@ -143,6 +151,11 @@ public class SubMenu { //TODO add a constructor for creating window (cut down on
         Scene scene = new Scene(branch);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    public void closeWindow(){
+        //this.stage.close();
+        System.out.println("closing window");
     }
 
     //can probably put the import file method from familyGraph in here

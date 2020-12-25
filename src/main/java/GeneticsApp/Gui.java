@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 
 import java.awt.*;
 
-public class Gui extends Application implements EventHandler<ActionEvent> {
+public class Gui extends Application  {
 
     Button importButton =  new Button("Import File");
     Button exportButton = new Button("Export File");
@@ -55,25 +55,6 @@ public class Gui extends Application implements EventHandler<ActionEvent> {
 
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        if(actionEvent.getSource()==importButton){
-            System.out.println("import pressed");
-        }
-        else if(actionEvent.getSource()==exportButton){
-            System.out.println("export pressed");
-        }
-        else if(actionEvent.getSource()==exploreGraphButton){
-            System.out.println("exploreGraphButton pressed");
-        }
-        else if(actionEvent.getSource()==addPerson){
-            System.out.println("addPerson pressed");
-        }
-        else if(actionEvent.getSource()==displayGraph){
-            System.out.println("displayGraph pressed");
-        }
     }
 
     @Override
